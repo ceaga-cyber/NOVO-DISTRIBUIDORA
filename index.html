@@ -804,6 +804,7 @@
 
   /* ========== MODAL DE CONFIRMAÇÃO ========== */
   .modal-overlay {
+  .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
@@ -894,6 +895,151 @@
       flex-direction: row-reverse;
     }
     .modal-btn { width: auto; flex: 1; }
+  }
+
+  /* ========== MODAL DE ENDEREÇO (FULL SCREEN) ========== */
+  .addr-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 1.5rem 1rem;
+    animation: fadeIn 0.2s;
+  }
+  .addr-modal.open { display: block; }
+  .addr-modal-box {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    animation: scaleIn 0.25s ease;
+  }
+  .addr-modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .addr-modal-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .addr-modal-header p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .addr-modal-header p strong { color: var(--accent); }
+  .addr-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .addr-modal-close:hover { background: var(--bg-card); color: var(--text); }
+  .addr-modal-body {
+    padding: 1.5rem;
+  }
+  .addr-modal-section {
+    margin-bottom: 1.5rem;
+  }
+  .addr-modal-section:last-child { margin-bottom: 0; }
+  .addr-modal-section-title {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .addr-modal-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    bottom: 0;
+  }
+  .addr-modal-footer .whatsapp-btn {
+    margin-top: 0;
+  }
+  .addr-cep-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: flex-end;
+    margin-bottom: 12px;
+  }
+  .addr-cep-row .field { margin-bottom: 0; }
+  .cep-status {
+    font-size: 0.78rem;
+    margin-top: 6px;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  .cep-status.show { display: flex; }
+  .cep-status.loading { color: var(--text-muted); }
+  .cep-status.success { color: var(--success); }
+  .cep-status.error { color: var(--danger); }
+  .cep-status .spinner { width: 12px; height: 12px; border-width: 2px; }
+
+  /* Resumo do pedido dentro do modal */
+  .order-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 1.25rem;
+  }
+  .order-summary-title {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .order-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .order-summary-row:last-child { margin-bottom: 0; }
+  .order-summary-row.total {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 500;
+  }
+  .order-summary-row.total .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .addr-modal { padding: 0; }
+    .addr-modal-box { border-radius: 0; min-height: 100vh; }
   }
 
   footer {
@@ -1005,49 +1151,6 @@
 
           <!-- Resumo após escolha do frete -->
           <div id="freteResumo" class="entrega-resumo" style="display: none;"></div>
-
-          <!-- Formulário endereço (aparece DEPOIS de selecionar PAC/SEDEX) -->
-          <div id="formEndereco" style="display: none;">
-            <div class="field">
-              <label>Nome completo<span class="req">*</span></label>
-              <input type="text" id="endNome" placeholder="Seu nome completo">
-              <div class="field-error" id="errEndNome">Campo obrigatório</div>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label>Rua<span class="req">*</span></label>
-                <input type="text" id="endRua" placeholder="Nome da rua">
-                <div class="field-error" id="errEndRua">Campo obrigatório</div>
-              </div>
-              <div class="field">
-                <label>Número<span class="req">*</span></label>
-                <input type="text" id="endNumero" placeholder="123">
-                <div class="field-error" id="errEndNumero">Campo obrigatório</div>
-              </div>
-            </div>
-            <div class="field">
-              <label>Bairro<span class="req">*</span></label>
-              <input type="text" id="endBairro" placeholder="Nome do bairro">
-              <div class="field-error" id="errEndBairro">Campo obrigatório</div>
-            </div>
-            <div class="field-row" style="grid-template-columns: 2fr 1fr;">
-              <div class="field">
-                <label>Cidade<span class="req">*</span></label>
-                <input type="text" id="endCidade" placeholder="Sua cidade">
-                <div class="field-error" id="errEndCidade">Campo obrigatório</div>
-              </div>
-              <div class="field">
-                <label>UF<span class="req">*</span></label>
-                <input type="text" id="endUF" placeholder="SP" maxlength="2" style="text-transform: uppercase;">
-                <div class="field-error" id="errEndUF">Estado</div>
-              </div>
-            </div>
-            <div class="field">
-              <label>CPF / CNPJ<span class="req">*</span></label>
-              <input type="text" id="endCpfCnpj" placeholder="000.000.000-00" inputmode="numeric">
-              <div class="field-error" id="errEndCpfCnpj">CPF ou CNPJ inválido</div>
-            </div>
-          </div>
         </div>
 
         <!-- Sub-fluxo: RETIRADA -->
@@ -1079,6 +1182,100 @@
 <footer>
   © 2025 · Peças iPhone Premium · Catálogo Atualizado
 </footer>
+
+<!-- MODAL DE ENDEREÇO (aparece após selecionar PAC/SEDEX) -->
+<div class="addr-modal" id="addrModal">
+  <div class="addr-modal-box">
+    <div class="addr-modal-header">
+      <div>
+        <h2>Finalizar pedido</h2>
+        <p id="addrModalSubtitle">Preencha os dados de entrega</p>
+      </div>
+      <button class="addr-modal-close" id="addrModalClose" aria-label="Fechar">
+        <i class="ti ti-x" style="font-size: 1.4rem;"></i>
+      </button>
+    </div>
+
+    <div class="addr-modal-body">
+      <!-- Resumo do pedido -->
+      <div class="order-summary" id="addrOrderSummary"></div>
+
+      <!-- Endereço -->
+      <div class="addr-modal-section">
+        <div class="addr-modal-section-title">📍 Endereço de entrega</div>
+
+        <div class="addr-cep-row">
+          <div class="field" style="margin-bottom: 0;">
+            <label>CEP<span class="req">*</span></label>
+            <input type="text" id="modalCep" placeholder="00000-000" maxlength="9" inputmode="numeric">
+          </div>
+          <div class="cep-status" id="cepStatus"></div>
+        </div>
+
+        <div class="field">
+          <label>Rua<span class="req">*</span></label>
+          <input type="text" id="modalRua" placeholder="Será preenchido pelo CEP">
+          <div class="field-error" id="errModalRua">Campo obrigatório</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Número<span class="req">*</span></label>
+            <input type="text" id="modalNumero" placeholder="123">
+            <div class="field-error" id="errModalNumero">Campo obrigatório</div>
+          </div>
+          <div class="field">
+            <label>Complemento</label>
+            <input type="text" id="modalComplemento" placeholder="Apto, sala, bloco">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Bairro<span class="req">*</span></label>
+          <input type="text" id="modalBairro" placeholder="Será preenchido pelo CEP">
+          <div class="field-error" id="errModalBairro">Campo obrigatório</div>
+        </div>
+
+        <div class="field-row" style="grid-template-columns: 2fr 1fr;">
+          <div class="field">
+            <label>Cidade<span class="req">*</span></label>
+            <input type="text" id="modalCidade" placeholder="Será preenchido pelo CEP">
+            <div class="field-error" id="errModalCidade">Campo obrigatório</div>
+          </div>
+          <div class="field">
+            <label>UF<span class="req">*</span></label>
+            <input type="text" id="modalUF" placeholder="SP" maxlength="2" style="text-transform: uppercase;">
+            <div class="field-error" id="errModalUF">Estado</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dados pessoais -->
+      <div class="addr-modal-section">
+        <div class="addr-modal-section-title">👤 Dados pessoais</div>
+
+        <div class="field">
+          <label>Nome completo<span class="req">*</span></label>
+          <input type="text" id="modalNome" placeholder="Seu nome completo">
+          <div class="field-error" id="errModalNome">Campo obrigatório</div>
+        </div>
+
+        <div class="field">
+          <label>CPF / CNPJ<span class="req">*</span></label>
+          <input type="text" id="modalCpfCnpj" placeholder="000.000.000-00" inputmode="numeric">
+          <div class="field-error" id="errModalCpfCnpj">CPF ou CNPJ inválido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="addr-modal-footer">
+      <button class="whatsapp-btn" id="btnFinalizarModal">
+        <i class="ti ti-brand-whatsapp"></i>
+        Confirmar e fechar pedido
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL CUSTOMIZADO DE CONFIRMAÇÃO PRA LIMPAR -->
 <div class="modal-overlay" id="modalLimpar">
@@ -1284,7 +1481,7 @@ function salvarLS() {
     localStorage.setItem("carrinho_pecas", JSON.stringify(carrinho));
     localStorage.setItem("checkout_state", JSON.stringify(checkout));
     // Salvar inputs preenchidos
-    const inputs = ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"];
+    const inputs = ["modalNome","modalRua","modalNumero","modalComplemento","modalBairro","modalCidade","modalUF","modalCpfCnpj","modalCep","retNome","cepDestino"];
     const dados = {};
     inputs.forEach(id => {
       const el = document.getElementById(id);
@@ -1666,10 +1863,29 @@ function validarCpfOuCnpj(v) {
 function setupMascaras() {
   const cep = document.getElementById("cepDestino");
   if (cep) cep.addEventListener("input", (e) => { e.target.value = mascararCEP(e.target.value); });
-  const doc = document.getElementById("endCpfCnpj");
+
+  // CEP do modal: máscara + buscar via ViaCEP quando completo
+  const modalCep = document.getElementById("modalCep");
+  if (modalCep) {
+    modalCep.addEventListener("input", (e) => {
+      e.target.value = mascararCEP(e.target.value);
+      // Debounce: busca quando CEP estiver com 8 dígitos
+      clearTimeout(cepBuscandoTimer);
+      const limpo = e.target.value.replace(/\D/g, "");
+      if (limpo.length === 8) {
+        cepBuscandoTimer = setTimeout(() => buscarCEP(limpo), 200);
+      } else {
+        document.getElementById("cepStatus").classList.remove("show");
+      }
+    });
+  }
+
+  // CPF/CNPJ do modal
+  const doc = document.getElementById("modalCpfCnpj");
   if (doc) doc.addEventListener("input", (e) => { e.target.value = mascararCpfCnpj(e.target.value); });
-  // Salvar no LS conforme digita
-  ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"].forEach(id => {
+
+  // Salvar no LS conforme digita + limpar erros
+  ["modalNome","modalRua","modalNumero","modalComplemento","modalBairro","modalCidade","modalUF","modalCpfCnpj","modalCep","retNome","cepDestino"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("input", () => {
       el.classList.remove("invalid");
@@ -1679,7 +1895,7 @@ function setupMascaras() {
     });
   });
   // Forçar UF em maiúsculas
-  const ufEl = document.getElementById("endUF");
+  const ufEl = document.getElementById("modalUF");
   if (ufEl) {
     ufEl.addEventListener("input", (e) => {
       e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
@@ -1794,17 +2010,118 @@ function selecionarFrete(idx) {
   document.querySelectorAll(".frete-opt").forEach((el, i) => {
     el.classList.toggle("selected", i === idx);
   });
-  // Mostra resumo e form de endereço
+  // Mostra resumo
   const resumo = document.getElementById("freteResumo");
   resumo.style.display = "block";
   resumo.innerHTML = `
     <div><strong>${op.nome}</strong> — ${formatBRL(op.preco)} · ${op.prazo_dias} dia${op.prazo_dias>1?'s':''} úteis</div>
-    <button type="button" class="change-link" onclick="document.getElementById('freteResumo').style.display='none'; document.getElementById('freteOpcoes').style.display='flex';">Trocar opção</button>
+    <button type="button" class="change-link" onclick="document.getElementById('freteResumo').style.display='none'; if(checkout.freteOpcoes.length) { renderFreteOpcoes(checkout.freteOpcoes); }">Trocar opção</button>
   `;
   document.getElementById("freteOpcoes").style.display = "none";
-  document.getElementById("formEndereco").style.display = "block";
   salvarLS();
   renderFloatingCart();
+  // Abre o modal de endereço
+  abrirModalEndereco();
+}
+
+function abrirModalEndereco() {
+  const items = Object.values(carrinho);
+  items.forEach(i => {
+    const p = PRODUTOS.find(x => x.id === i.id);
+    if (p) i.precoAplicado = precoAtual(p);
+  });
+  const subtotal = items.reduce((s, i) => s + i.precoAplicado * i.qtd, 0);
+  const freteVal = checkout.freteSelecionado ? checkout.freteSelecionado.preco : 0;
+  const total = subtotal + freteVal;
+  const op = checkout.freteSelecionado;
+
+  // Subtitle
+  document.getElementById("addrModalSubtitle").innerHTML =
+    `Entrega via <strong>${op.nome}</strong> — ${formatBRL(op.preco)} · ${op.prazo_dias} dia${op.prazo_dias>1?'s':''} úteis`;
+
+  // Resumo do pedido
+  const totalPcs = totalPecas();
+  document.getElementById("addrOrderSummary").innerHTML = `
+    <div class="order-summary-title">Resumo do pedido</div>
+    <div class="order-summary-row">
+      <span>${totalPcs} peça${totalPcs>1?'s':''} (${nomeTier(faixaAtual())})</span>
+      <span>${formatBRL(subtotal)}</span>
+    </div>
+    <div class="order-summary-row">
+      <span>Frete (${op.nome})</span>
+      <span>${formatBRL(freteVal)}</span>
+    </div>
+    <div class="order-summary-row total">
+      <span>Total</span>
+      <span class="val">${formatBRL(total)}</span>
+    </div>
+  `;
+
+  // Preenche CEP automaticamente (já calculou)
+  if (checkout.cepDestino) {
+    document.getElementById("modalCep").value = mascararCEP(checkout.cepDestino);
+    // Já tenta buscar
+    buscarCEP(checkout.cepDestino);
+  }
+
+  document.getElementById("addrModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+  // Foca no nome (primeiro campo importante)
+  setTimeout(() => {
+    const nomeEl = document.getElementById("modalNome");
+    if (nomeEl && !nomeEl.value) nomeEl.focus();
+  }, 300);
+}
+
+function fecharModalEndereco() {
+  document.getElementById("addrModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// Buscar dados do CEP via ViaCEP (grátis, sem token)
+let cepBuscandoTimer = null;
+async function buscarCEP(cep) {
+  const cepLimpo = String(cep).replace(/\D/g, "");
+  const statusEl = document.getElementById("cepStatus");
+
+  if (cepLimpo.length !== 8) {
+    statusEl.classList.remove("show");
+    return;
+  }
+
+  statusEl.className = "cep-status show loading";
+  statusEl.innerHTML = '<span class="spinner"></span> Buscando endereço...';
+
+  try {
+    const resp = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+    const data = await resp.json();
+
+    if (data.erro) {
+      statusEl.className = "cep-status show error";
+      statusEl.innerHTML = '<i class="ti ti-alert-circle"></i> CEP não encontrado';
+      return;
+    }
+
+    // Preenche os campos automaticamente
+    if (data.logradouro) document.getElementById("modalRua").value = data.logradouro;
+    if (data.bairro) document.getElementById("modalBairro").value = data.bairro;
+    if (data.localidade) document.getElementById("modalCidade").value = data.localidade;
+    if (data.uf) document.getElementById("modalUF").value = data.uf;
+
+    statusEl.className = "cep-status show success";
+    statusEl.innerHTML = '<i class="ti ti-check"></i> Endereço encontrado';
+
+    // Foca no número (próximo campo a preencher)
+    setTimeout(() => {
+      const numEl = document.getElementById("modalNumero");
+      if (numEl && !numEl.value) numEl.focus();
+    }, 100);
+
+    salvarLS();
+  } catch (err) {
+    statusEl.className = "cep-status show error";
+    statusEl.innerHTML = '<i class="ti ti-alert-circle"></i> Erro ao buscar CEP';
+  }
 }
 
 // Validar antes de enviar pro WhatsApp
@@ -1834,21 +2151,23 @@ function validarCheckout() {
       return false;
     }
     const campos = [
-      { id: "endNome", min: 3 },
-      { id: "endRua", min: 2 },
-      { id: "endNumero", min: 1 },
-      { id: "endBairro", min: 2 },
-      { id: "endCidade", min: 2 },
-      { id: "endUF", min: 2 },
+      { id: "modalNome", min: 3 },
+      { id: "modalCep", min: 8, isCep: true },
+      { id: "modalRua", min: 2 },
+      { id: "modalNumero", min: 1 },
+      { id: "modalBairro", min: 2 },
+      { id: "modalCidade", min: 2 },
+      { id: "modalUF", min: 2 },
     ];
     campos.forEach(c => {
       const el = document.getElementById(c.id);
       const v = el.value.trim();
-      if (v.length < c.min) showErr(c.id);
+      const len = c.isCep ? v.replace(/\D/g, "").length : v.length;
+      if (len < c.min) showErr(c.id);
     });
-    const docVal = document.getElementById("endCpfCnpj").value;
+    const docVal = document.getElementById("modalCpfCnpj").value;
     if (!validarCpfOuCnpj(docVal)) {
-      showErr("endCpfCnpj", "CPF ou CNPJ inválido");
+      showErr("modalCpfCnpj", "CPF ou CNPJ inválido");
     }
   } else if (checkout.tipoEntrega === "retirada") {
     const v = document.getElementById("retNome").value.trim();
@@ -1890,19 +2209,24 @@ async function finalizarWhatsApp() {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner" style="border-color: rgba(255,255,255,0.5); border-top-color: transparent;"></span> Preparando etiqueta...';
 
+    // Atualiza CEP do checkout state com o que está no modal
+    const cepLimpoModal = (document.getElementById("modalCep").value || "").replace(/\D/g, "");
+    if (cepLimpoModal.length === 8) checkout.cepDestino = cepLimpoModal;
+
     const payload = {
       servico_id: checkout.freteSelecionado.id,
       cliente: {
-        nome: document.getElementById("endNome").value.trim(),
-        documento: document.getElementById("endCpfCnpj").value.trim(),
+        nome: document.getElementById("modalNome").value.trim(),
+        documento: document.getElementById("modalCpfCnpj").value.trim(),
       },
       endereco_destino: {
         cep: checkout.cepDestino,
-        rua: document.getElementById("endRua").value.trim(),
-        numero: document.getElementById("endNumero").value.trim(),
-        bairro: document.getElementById("endBairro").value.trim(),
-        cidade: document.getElementById("endCidade").value.trim(),
-        uf: document.getElementById("endUF").value.trim().toUpperCase(),
+        rua: document.getElementById("modalRua").value.trim(),
+        numero: document.getElementById("modalNumero").value.trim(),
+        complemento: document.getElementById("modalComplemento").value.trim(),
+        bairro: document.getElementById("modalBairro").value.trim(),
+        cidade: document.getElementById("modalCidade").value.trim(),
+        uf: document.getElementById("modalUF").value.trim().toUpperCase(),
       },
       itens: items.map(i => ({
         nome: i.model + " (" + (CAT_MAP[i.category]?.tab || "") + ")",
@@ -1940,12 +2264,13 @@ async function finalizarWhatsApp() {
   let msg = `*Pedido — ${NOME_LOJA}*\n\n`;
 
   if (checkout.tipoEntrega === "frete") {
-    msg += `*Cliente:* ${document.getElementById("endNome").value.trim()}\n`;
-    msg += `*CPF/CNPJ:* ${document.getElementById("endCpfCnpj").value.trim()}\n\n`;
+    msg += `*Cliente:* ${document.getElementById("modalNome").value.trim()}\n`;
+    msg += `*CPF/CNPJ:* ${document.getElementById("modalCpfCnpj").value.trim()}\n\n`;
     msg += `*📦 Entrega: ${checkout.freteSelecionado.nome}*\n`;
     msg += `_(${formatBRL(freteVal)} · ${checkout.freteSelecionado.prazo_dias} dia${checkout.freteSelecionado.prazo_dias>1?'s':''} úteis)_\n`;
-    msg += `${document.getElementById("endRua").value.trim()}, ${document.getElementById("endNumero").value.trim()}\n`;
-    msg += `${document.getElementById("endBairro").value.trim()} · ${document.getElementById("endCidade").value.trim()}/${document.getElementById("endUF").value.trim().toUpperCase()}\n`;
+    const complemento = document.getElementById("modalComplemento").value.trim();
+    msg += `${document.getElementById("modalRua").value.trim()}, ${document.getElementById("modalNumero").value.trim()}${complemento ? ' - ' + complemento : ''}\n`;
+    msg += `${document.getElementById("modalBairro").value.trim()} · ${document.getElementById("modalCidade").value.trim()}/${document.getElementById("modalUF").value.trim().toUpperCase()}\n`;
     msg += `CEP: ${mascararCEP(checkout.cepDestino)}\n\n`;
     if (idEnvioME) {
       msg += `_📋 Etiqueta criada no Melhor Envio_\n_ID: ${idEnvioME}_\n\n`;
@@ -1982,7 +2307,22 @@ document.getElementById("fcMinimize").addEventListener("click", () => {
   document.getElementById("floatingCart").classList.remove("expanded");
   cartExpanded = false;
 });
-document.getElementById("btnFinalizar").addEventListener("click", finalizarWhatsApp);
+
+// Botão "Fechar no WhatsApp" do carrinho lateral:
+// - Se for frete e já tem opção selecionada → abre modal de endereço
+// - Se for retirada → finaliza direto
+// - Se ainda não escolheu nada → tenta finalizar (validação reclama)
+document.getElementById("btnFinalizar").addEventListener("click", () => {
+  if (checkout.tipoEntrega === "frete" && checkout.freteSelecionado) {
+    abrirModalEndereco();
+  } else {
+    finalizarWhatsApp();
+  }
+});
+
+// Botão dentro do modal de endereço → finaliza de verdade
+document.getElementById("btnFinalizarModal").addEventListener("click", finalizarWhatsApp);
+document.getElementById("addrModalClose").addEventListener("click", fecharModalEndereco);
 
 // Entrega: Frete x Retirada
 document.getElementById("optFrete").addEventListener("click", () => setTipoEntrega("frete"));
@@ -2024,11 +2364,14 @@ function executarLimpar() {
     localStorage.removeItem("checkout_inputs");
   } catch (e) {}
   // 3. Limpa todos os inputs do checkout
-  ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"].forEach(id => {
+  ["modalNome","modalRua","modalNumero","modalComplemento","modalBairro","modalCidade","modalUF","modalCpfCnpj","modalCep","retNome","cepDestino"].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.value = ""; el.classList.remove("invalid"); }
   });
   document.querySelectorAll(".field-error").forEach(e => e.classList.remove("show"));
+  // Status do CEP
+  const statusEl = document.getElementById("cepStatus");
+  if (statusEl) statusEl.classList.remove("show");
   // 4. Reset visual da entrega
   document.getElementById("optFrete").classList.remove("active");
   document.getElementById("optRetirada").classList.remove("active");
@@ -2037,8 +2380,9 @@ function executarLimpar() {
   document.getElementById("freteOpcoes").style.display = "none";
   document.getElementById("freteOpcoes").innerHTML = "";
   document.getElementById("freteResumo").style.display = "none";
-  document.getElementById("formEndereco").style.display = "none";
   document.getElementById("freteMsg").style.display = "none";
+  // Fecha modal de endereço se estiver aberto
+  fecharModalEndereco();
   // 5. Re-renderiza tabela (volta tudo pra qtd 0)
   renderConteudo();
   // 6. Esconde carrinho flutuante
@@ -2066,14 +2410,13 @@ renderFloatingCart();
 if (checkout.tipoEntrega) {
   setTipoEntrega(checkout.tipoEntrega);
   if (checkout.tipoEntrega === "frete" && checkout.freteSelecionado) {
-    // Mostra o resumo do frete escolhido e o form de endereço
+    // Mostra o resumo do frete escolhido (modal abre só quando clicar finalizar)
     document.getElementById("freteResumo").style.display = "block";
     const op = checkout.freteSelecionado;
     document.getElementById("freteResumo").innerHTML = `
       <div><strong>${op.nome}</strong> — ${formatBRL(op.preco)} · ${op.prazo_dias} dia${op.prazo_dias>1?'s':''} úteis</div>
       <button type="button" class="change-link" onclick="document.getElementById('freteResumo').style.display='none'; if(checkout.freteOpcoes.length) { renderFreteOpcoes(checkout.freteOpcoes); }">Trocar opção</button>
     `;
-    document.getElementById("formEndereco").style.display = "block";
   }
 }
 </script>
