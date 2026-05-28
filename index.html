@@ -902,9 +902,9 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.92);
     backdrop-filter: blur(10px);
-    z-index: 100;
+    z-index: 200;
     overflow-y: auto;
     padding: 1.5rem 1rem;
     animation: fadeIn 0.2s;
@@ -2025,6 +2025,10 @@ function selecionarFrete(idx) {
 }
 
 function abrirModalEndereco() {
+  // Fecha o carrinho lateral pra não competir com o modal
+  document.getElementById("floatingCart").classList.remove("expanded");
+  cartExpanded = false;
+
   const items = Object.values(carrinho);
   items.forEach(i => {
     const p = PRODUTOS.find(x => x.id === i.id);
@@ -2261,41 +2265,66 @@ async function finalizarWhatsApp() {
   // ============================================================
   // Monta mensagem do WhatsApp
   // ============================================================
-  let msg = `*Pedido — ${NOME_LOJA}*\n\n`;
+  let msg = `*🛍️ NOVO PEDIDO — ${NOME_LOJA}*\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
 
+  // Dados do cliente
   if (checkout.tipoEntrega === "frete") {
-    msg += `*Cliente:* ${document.getElementById("modalNome").value.trim()}\n`;
-    msg += `*CPF/CNPJ:* ${document.getElementById("modalCpfCnpj").value.trim()}\n\n`;
-    msg += `*📦 Entrega: ${checkout.freteSelecionado.nome}*\n`;
-    msg += `_(${formatBRL(freteVal)} · ${checkout.freteSelecionado.prazo_dias} dia${checkout.freteSelecionado.prazo_dias>1?'s':''} úteis)_\n`;
+    msg += `*👤 DADOS DO CLIENTE*\n`;
+    msg += `Nome: ${document.getElementById("modalNome").value.trim()}\n`;
+    msg += `CPF/CNPJ: ${document.getElementById("modalCpfCnpj").value.trim()}\n\n`;
+
+    msg += `*📍 ENDEREÇO DE ENTREGA*\n`;
     const complemento = document.getElementById("modalComplemento").value.trim();
-    msg += `${document.getElementById("modalRua").value.trim()}, ${document.getElementById("modalNumero").value.trim()}${complemento ? ' - ' + complemento : ''}\n`;
-    msg += `${document.getElementById("modalBairro").value.trim()} · ${document.getElementById("modalCidade").value.trim()}/${document.getElementById("modalUF").value.trim().toUpperCase()}\n`;
+    msg += `${document.getElementById("modalRua").value.trim()}, ${document.getElementById("modalNumero").value.trim()}\n`;
+    if (complemento) msg += `Complemento: ${complemento}\n`;
+    msg += `Bairro: ${document.getElementById("modalBairro").value.trim()}\n`;
+    msg += `${document.getElementById("modalCidade").value.trim()} / ${document.getElementById("modalUF").value.trim().toUpperCase()}\n`;
     msg += `CEP: ${mascararCEP(checkout.cepDestino)}\n\n`;
+
+    msg += `*📦 FORMA DE ENVIO*\n`;
+    msg += `${checkout.freteSelecionado.nome} — ${formatBRL(freteVal)}\n`;
+    msg += `Prazo: ${checkout.freteSelecionado.prazo_dias} dia${checkout.freteSelecionado.prazo_dias>1?'s':''} úteis\n`;
     if (idEnvioME) {
-      msg += `_📋 Etiqueta criada no Melhor Envio_\n_ID: ${idEnvioME}_\n\n`;
+      msg += `_Etiqueta ME criada · ID ${idEnvioME}_\n`;
     }
+    msg += `\n`;
   } else {
-    msg += `*Cliente:* ${document.getElementById("retNome").value.trim()}\n\n`;
-    msg += `*🏪 Retirada na loja*\n\n`;
+    msg += `*👤 DADOS DO CLIENTE*\n`;
+    msg += `Nome: ${document.getElementById("retNome").value.trim()}\n\n`;
+    msg += `*🏪 RETIRADA NA LOJA*\n\n`;
   }
 
-  msg += `*Tabela:* ${nomeTier(f)} (${totalPecas()} peças)\n\n`;
-  msg += `━━━━━━━━━━━━━━━━━━\n\n`;
+  // Itens do pedido
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `*🛒 PEDIDO*  _(${nomeTier(f)} · ${totalPecas()} pç)_\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+
   items.forEach((i, idx) => {
     const meta = CAT_MAP[i.category] || {};
     const ref = meta.brand ? `${meta.tab} ${meta.brand}` : meta.tab;
     msg += `${idx+1}. *${i.model}*\n`;
-    msg += `    ${ref}\n`;
-    msg += `    ${i.qtd}x ${formatBRL(i.precoAplicado)} = *${formatBRL(i.precoAplicado * i.qtd)}*\n\n`;
+    msg += `   ${ref}\n`;
+    msg += `   ${i.qtd}x ${formatBRL(i.precoAplicado)} = *${formatBRL(i.precoAplicado * i.qtd)}*\n\n`;
   });
-  msg += `━━━━━━━━━━━━━━━━━━\n`;
-  msg += `Subtotal: ${formatBRL(subtotal)}\n`;
-  if (freteVal > 0) msg += `Frete: ${formatBRL(freteVal)}\n`;
+
+  // Totais
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `*💰 VALORES*\n`;
+  msg += `Subtotal das peças: ${formatBRL(subtotal)}\n`;
+  if (freteVal > 0) {
+    msg += `Frete (${checkout.freteSelecionado.nome}): ${formatBRL(freteVal)}\n`;
+  } else if (checkout.tipoEntrega === "retirada") {
+    msg += `Frete: Retirada na loja\n`;
+  }
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
   msg += `*TOTAL: ${formatBRL(total)}*`;
 
   const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
+
+  // Fecha o modal depois de finalizar
+  fecharModalEndereco();
 }
 
 document.getElementById("busca").addEventListener("input", renderConteudo);
