@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Premium · Peças iPhone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.21.0/tabler-icons.min.css" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-elev: #131313;
+    --bg-card: #161616;
+    --bg-row: #1a1a1a;
+    --bg-row-hover: #1f1f1f;
+    --border: #262626;
+    --border-strong: #3a3a3a;
+    --text: #f5f5f5;
+    --text-muted: #a3a3a3;
+    --text-dim: #6b6b6b;
+    --accent: #d4a857;
+    --accent-bright: #f0c46d;
+    --accent-dim: #9a7a3f;
+    --accent-glow: rgba(212, 168, 87, 0.12);
+    --whatsapp: #25D366;
+    --whatsapp-dark: #1da856;
+    --danger: #e54848;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%; left: -10%;
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%; right: -10%;
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(80, 80, 200, 0.06), transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 8rem;
+    position: relative;
+    z-index: 1;
+  }
+  header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .brand .accent { color: var(--accent); font-style: italic; }
+  .tagline {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin-top: 1.2rem; color: var(--accent-dim);
+  }
+  .ornament .line { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--accent-dim)); }
+  .ornament .line:last-child { background: linear-gradient(to left, transparent, var(--accent-dim)); }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .toolbar-info { font-size: 0.85rem; color: var(--text-muted); }
+  .toolbar-info strong { color: var(--text); font-weight: 500; }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 4px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1px;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    background: transparent; border: none;
+    color: var(--text-muted);
+    padding: 12px 18px;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+    position: relative; transition: color 0.2s;
+    font-family: inherit; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); }
+  .tab.active::after {
+    content: ''; position: absolute;
+    bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 2px; background: var(--accent);
+  }
+  .tab .count { font-size: 0.72rem; color: var(--text-dim); font-weight: 400; }
+  .tab.active .count { color: var(--accent); }
+
+  /* Search */
+  .search-wrap { position: relative; margin-bottom: 2rem; }
+  .search-wrap i {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-dim); font-size: 1.1rem;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px 12px 42px;
+    border-radius: var(--radius);
+    font-size: 0.9rem; font-family: inherit;
+    transition: all 0.2s;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent-dim); background: var(--bg-card); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  /* Brand sections */
+  .brand-section { margin-bottom: 2.5rem; }
+  .brand-header {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 0;
+  }
+  .brand-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 600;
+    letter-spacing: -0.01em; color: var(--text);
+  }
+  .brand-header .brand-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border-strong), transparent);
+  }
+  .brand-header .brand-count {
+    font-size: 0.72rem; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.15em;
+  }
+
+  /* TABLE */
+  .price-table-wrap {
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+  }
+  .price-table thead tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .price-table th {
+    padding: 16px 18px;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .price-table th.col-price { text-align: center; min-width: 120px; }
+  .price-table th.col-qty { text-align: center; width: 170px; }
+
+  .price-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .price-table tbody tr:hover { background: var(--bg-row-hover); }
+  .price-table tbody tr.in-cart {
+    background: linear-gradient(90deg, rgba(212,168,87,0.05), transparent 80%);
+  }
+  .price-table tbody tr.in-cart:hover { background: linear-gradient(90deg, rgba(212,168,87,0.09), var(--bg-row-hover)); }
+
+  .price-table td {
+    padding: 18px;
+    vertical-align: middle;
+  }
+  .price-table td.model {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.98rem;
+  }
+  .price-table td.price {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    color: var(--accent-bright);
+    font-size: 1.3rem;
+    letter-spacing: 0.01em;
+  }
+  .price-table td.price.single {
+    font-size: 1.45rem;
+  }
+  .price-table td.price.empty {
+    color: var(--text-dim);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+  .price-table td.qty {
+    text-align: center;
+  }
+  .qty-control {
+    display: inline-flex; align-items: center; gap: 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .qty-btn {
+    width: 40px; height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  .qty-btn:hover { background: var(--accent-glow); color: var(--accent); }
+  .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .qty-btn:disabled:hover { background: transparent; color: var(--text); }
+  .qty-display {
+    min-width: 44px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qty-display.has-qty { color: var(--accent); }
+
+  /* Indicador da tabela ativa nos headers de preço */
+  .price-table th.col-price.tier-active {
+    color: var(--accent);
+    position: relative;
+  }
+  .price-table th.col-price.tier-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 30%; right: 30%;
+    height: 2px; background: var(--accent);
+  }
+  .price-table td.price.tier-active {
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  /* Mobile: scroll horizontal pra tabela */
+  @media (max-width: 720px) {
+    .container { padding: 1.2rem 1rem 8rem; }
+    .brand { font-size: 2rem; }
+    .price-table th, .price-table td { padding: 14px 12px; }
+    .price-table td.model { font-size: 0.9rem; }
+    .price-table td.price { font-size: 1.1rem; }
+    .qty-btn { width: 34px; height: 34px; }
+    .qty-display { min-width: 36px; height: 34px; font-size: 0.92rem; }
+  }
+
+  /* ====== CARRINHO FLUTUANTE (FAB esquerdo) ====== */
+  .floating-cart {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 40;
+    transition: all 0.3s ease;
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .floating-cart.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+  .fc-collapsed {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 100px;
+    padding: 14px 22px 14px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 168, 87, 0.3);
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .fc-collapsed:hover {
+    background: var(--accent-bright);
+    transform: translateY(-2px);
+  }
+  .fc-collapsed i { font-size: 1.5rem; }
+  .fc-collapsed .fc-count {
+    background: var(--bg);
+    color: var(--accent);
+    min-width: 26px;
+    height: 26px;
+    padding: 0 8px;
+    border-radius: 13px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fc-collapsed .fc-total {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-left: 1px solid rgba(0,0,0,0.25);
+    padding-left: 12px;
+    margin-left: 2px;
+  }
+
+  /* Versão expandida (mini-carrinho) */
+  .fc-expanded {
+    display: none;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    width: 380px;
+    max-width: calc(100vw - 40px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    overflow: hidden;
+    flex-direction: column;
+    max-height: calc(100vh - 80px);
+  }
+  .floating-cart.expanded .fc-expanded { display: flex; }
+  .floating-cart.expanded .fc-collapsed { display: none; }
+  .fc-header {
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .fc-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+  .fc-header .fc-tier-badge {
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: 8px;
+  }
+  .fc-minimize {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .fc-minimize:hover { background: var(--bg); color: var(--text); }
+  .fc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px;
+    max-height: 320px;
+  }
+  .fc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .fc-item:last-child { border-bottom: none; }
+  .fc-item-info { flex: 1; min-width: 0; }
+  .fc-item-meta {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fc-item-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fc-item-price {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .fc-item-qty {
+    display: flex; align-items: center; gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .fc-item-qty .qty-btn { width: 28px; height: 28px; font-size: 0.85rem; }
+  .fc-item-qty .qty-display { min-width: 28px; height: 28px; font-size: 0.85rem; }
+  .fc-item-total {
+    min-width: 70px;
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .fc-progress {
+    padding: 10px 18px;
+    background: rgba(212, 168, 87, 0.04);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fc-progress strong { color: var(--accent); font-weight: 500; }
+  .fc-progress i { color: var(--accent); font-size: 1rem; }
+  .fc-footer {
+    padding: 14px 18px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .fc-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .fc-summary-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .fc-summary-total {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .fc-cliente {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-family: inherit;
+    margin-bottom: 8px;
+  }
+  .fc-cliente:focus { outline: none; border-color: var(--accent-dim); }
+  .fc-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .fc-btn-whats {
+    flex: 1;
+    background: var(--whatsapp);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .fc-btn-whats:hover { background: var(--whatsapp-dark); }
+  .fc-btn-whats i { font-size: 1.15rem; }
+  .fc-btn-clear-full {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    font-family: inherit;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+  .fc-btn-clear-full:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+    background: rgba(229, 72, 72, 0.05);
+  }
+  .fc-btn-clear {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .fc-btn-clear:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+
+  @media (max-width: 480px) {
+    .fc-expanded { width: calc(100vw - 40px); }
+    .fc-collapsed .fc-total { display: none; }
+  }
+
+  .empty-state { text-align: center; padding: 4rem 1rem; color: var(--color-text-dim, var(--text-dim)); }
+  .empty-state i { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+  /* ========== CHECKOUT (NOME + ENTREGA + FORM) ========== */
+  .checkout-section {
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 10px;
+  }
+  .checkout-section h4 {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .checkout-section h4 .req {
+    color: var(--danger);
+    margin-left: 3px;
+  }
+  .field {
+    margin-bottom: 10px;
+  }
+  .field label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .field label .req { color: var(--danger); margin-left: 2px; }
+  .field input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .field input:focus {
+    outline: none;
+    border-color: var(--accent-dim);
+  }
+  .field input.invalid {
+    border-color: var(--danger);
+    background: rgba(229, 72, 72, 0.04);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .field-row.cep-row {
+    grid-template-columns: 1.4fr auto;
+  }
+  .field-row.cidade-cpf {
+    grid-template-columns: 2fr 1fr;
+  }
+  .field-error {
+    font-size: 0.7rem;
+    color: var(--danger);
+    margin-top: 4px;
+    display: none;
+  }
+  .field-error.show { display: block; }
+
+  /* Botões de entrega: Frete x Retirada */
+  .delivery-choice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .delivery-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 12px 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .delivery-btn i { font-size: 1.4rem; }
+  .delivery-btn:hover { color: var(--text); border-color: var(--border-strong); }
+  .delivery-btn.active {
+    background: var(--accent-glow);
+    border-color: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* Botão calcular frete */
+  .calc-frete-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-dim);
+    color: var(--accent);
+    padding: 9px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .calc-frete-btn:hover { background: var(--accent-glow); }
+  .calc-frete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .calc-frete-btn .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid var(--accent-dim);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Opções de frete (PAC/SEDEX) */
+  .frete-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .frete-opt {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s;
+  }
+  .frete-opt:hover { border-color: var(--border-strong); }
+  .frete-opt.selected {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .frete-opt-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .frete-opt-radio {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .frete-opt.selected .frete-opt-radio {
+    border-color: var(--accent);
+  }
+  .frete-opt.selected .frete-opt-radio::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .frete-opt-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+  .frete-opt-prazo {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .frete-opt-preco {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .frete-msg {
+    background: rgba(229, 72, 72, 0.06);
+    border: 1px solid rgba(229, 72, 72, 0.3);
+    color: var(--danger);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+  }
+  .frete-msg.info {
+    background: rgba(212, 168, 87, 0.06);
+    border-color: rgba(212, 168, 87, 0.3);
+    color: var(--accent);
+  }
+
+  /* Resumo de entrega após selecionar */
+  .entrega-resumo {
+    background: var(--accent-glow);
+    border: 1px solid var(--accent-dim);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 0.82rem;
+  }
+  .entrega-resumo strong { color: var(--accent); }
+  .entrega-resumo .change-link {
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    text-decoration: underline;
+    padding: 0;
+    margin-top: 4px;
+    font-family: inherit;
+  }
+
+  /* ========== MODAL DE CONFIRMAÇÃO ========== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem 1.5rem;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    animation: scaleIn 0.25s ease;
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(229, 72, 72, 0.12);
+    color: var(--danger);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    font-size: 1.8rem;
+  }
+  .modal-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+  .modal-box p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .modal-box p strong { color: var(--text); font-weight: 500; }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .modal-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .modal-btn-confirm {
+    background: var(--danger);
+    color: white;
+  }
+  .modal-btn-confirm:hover {
+    background: #c93535;
+    transform: translateY(-1px);
+  }
+  .modal-btn-cancel {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+  }
+  .modal-btn-cancel:hover {
+    background: var(--bg-card);
+  }
+  @media (min-width: 480px) {
+    .modal-actions {
+      flex-direction: row-reverse;
+    }
+    .modal-btn { width: auto; flex: 1; }
+  }
+
+  footer {
+    margin-top: 4rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center; font-size: 0.78rem;
+    color: var(--text-dim); letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1 class="brand">Peças <span class="accent">iPhone</span> Premium</h1>
+    <div class="tagline">Catálogo · Atacado &amp; Distribuição</div>
+    <div class="ornament">
+      <span class="line"></span>
+      <i class="ti ti-diamond" style="font-size: 0.8rem;"></i>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-info">
+      <strong id="metaCount">0</strong> peças nesta categoria
+    </div>
+  </div>
+
+  <div class="tabs" id="tabsBar"></div>
+
+  <div class="search-wrap">
+    <i class="ti ti-search"></i>
+    <input type="text" class="search-input" id="busca" placeholder="Buscar modelo... ex: iPhone 13 Pro">
+  </div>
+
+  <div id="brandsContainer"></div>
+</div>
+
+<!-- CARRINHO FLUTUANTE (canto inferior esquerdo) -->
+<div class="floating-cart" id="floatingCart">
+  <!-- Collapsed: aparece como pill clicável -->
+  <button class="fc-collapsed" id="fcCollapsed" aria-label="Abrir carrinho">
+    <i class="ti ti-shopping-cart"></i>
+    <span class="fc-count" id="fcCount">0</span>
+    <span class="fc-total" id="fcTotalMini">R$ 0,00</span>
+  </button>
+
+  <!-- Expanded: mini-painel do carrinho -->
+  <div class="fc-expanded">
+    <div class="fc-header">
+      <div>
+        <h3>Carrinho</h3>
+        <span class="fc-tier-badge" id="fcTierBadge">Varejo</span>
+      </div>
+      <button class="fc-minimize" id="fcMinimize" aria-label="Minimizar">
+        <i class="ti ti-chevron-down" style="font-size: 1.15rem;"></i>
+      </button>
+    </div>
+    <div class="fc-body" id="fcBody"></div>
+    <div class="fc-progress" id="fcProgress" style="display:none;">
+      <i class="ti ti-trending-up"></i>
+      <span id="fcProgressText"></span>
+    </div>
+    <div class="fc-footer">
+      <div class="fc-summary">
+        <span class="fc-summary-label">Subtotal</span>
+        <span class="fc-summary-total" id="fcSubtotal" style="font-size: 1.1rem;">R$ 0,00</span>
+      </div>
+      <div class="fc-summary" id="rowFrete" style="display: none;">
+        <span class="fc-summary-label">Frete (<span id="rowFreteNome">—</span>)</span>
+        <span class="fc-summary-total" id="fcFreteValor" style="font-size: 1.1rem;">R$ 0,00</span>
+      </div>
+      <div class="fc-summary" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);">
+        <span class="fc-summary-label" style="font-size: 0.95rem; color: var(--text);">Total</span>
+        <span class="fc-summary-total" id="fcTotal">R$ 0,00</span>
+      </div>
+
+      <!-- ENTREGA: Frete x Retirada -->
+      <div class="checkout-section">
+        <h4>Forma de entrega<span class="req">*</span></h4>
+        <div class="delivery-choice">
+          <button class="delivery-btn" id="optFrete" data-tipo="frete">
+            <i class="ti ti-truck-delivery"></i>
+            Calcular frete
+          </button>
+          <button class="delivery-btn" id="optRetirada" data-tipo="retirada">
+            <i class="ti ti-building-store"></i>
+            Retirar na loja
+          </button>
+        </div>
+
+        <!-- Sub-fluxo: CALCULAR FRETE -->
+        <div id="boxFrete" style="display: none;">
+          <div class="field-row cep-row">
+            <div class="field" style="margin-bottom: 0;">
+              <label>CEP de destino<span class="req">*</span></label>
+              <input type="text" id="cepDestino" placeholder="00000-000" maxlength="9" inputmode="numeric">
+            </div>
+            <div class="field" style="margin-bottom: 0; display: flex; align-items: flex-end;">
+              <button class="calc-frete-btn" id="btnCalcFrete">
+                <i class="ti ti-calculator"></i> Calcular
+              </button>
+            </div>
+          </div>
+          <div class="field-error" id="errCep">Digite um CEP válido (8 dígitos)</div>
+
+          <div id="freteMsg" class="frete-msg" style="display: none;"></div>
+          <div id="freteOpcoes" class="frete-opcoes" style="display: none;"></div>
+
+          <!-- Resumo após escolha do frete -->
+          <div id="freteResumo" class="entrega-resumo" style="display: none;"></div>
+
+          <!-- Formulário endereço (aparece DEPOIS de selecionar PAC/SEDEX) -->
+          <div id="formEndereco" style="display: none;">
+            <div class="field">
+              <label>Nome completo<span class="req">*</span></label>
+              <input type="text" id="endNome" placeholder="Seu nome completo">
+              <div class="field-error" id="errEndNome">Campo obrigatório</div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Rua<span class="req">*</span></label>
+                <input type="text" id="endRua" placeholder="Nome da rua">
+                <div class="field-error" id="errEndRua">Campo obrigatório</div>
+              </div>
+              <div class="field">
+                <label>Número<span class="req">*</span></label>
+                <input type="text" id="endNumero" placeholder="123">
+                <div class="field-error" id="errEndNumero">Campo obrigatório</div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Bairro<span class="req">*</span></label>
+              <input type="text" id="endBairro" placeholder="Nome do bairro">
+              <div class="field-error" id="errEndBairro">Campo obrigatório</div>
+            </div>
+            <div class="field-row" style="grid-template-columns: 2fr 1fr;">
+              <div class="field">
+                <label>Cidade<span class="req">*</span></label>
+                <input type="text" id="endCidade" placeholder="Sua cidade">
+                <div class="field-error" id="errEndCidade">Campo obrigatório</div>
+              </div>
+              <div class="field">
+                <label>UF<span class="req">*</span></label>
+                <input type="text" id="endUF" placeholder="SP" maxlength="2" style="text-transform: uppercase;">
+                <div class="field-error" id="errEndUF">Estado</div>
+              </div>
+            </div>
+            <div class="field">
+              <label>CPF / CNPJ<span class="req">*</span></label>
+              <input type="text" id="endCpfCnpj" placeholder="000.000.000-00" inputmode="numeric">
+              <div class="field-error" id="errEndCpfCnpj">CPF ou CNPJ inválido</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-fluxo: RETIRADA -->
+        <div id="boxRetirada" style="display: none;">
+          <div class="field">
+            <label>Nome completo<span class="req">*</span></label>
+            <input type="text" id="retNome" placeholder="Seu nome completo">
+            <div class="field-error" id="errRetNome">Campo obrigatório</div>
+          </div>
+          <div class="frete-msg info" style="display: flex; align-items: flex-start; gap: 8px;">
+            <i class="ti ti-info-circle" style="font-size: 1rem; flex-shrink: 0; margin-top: 1px;"></i>
+            <span>Retirada na loja — endereço será confirmado pelo WhatsApp após o pedido.</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="fc-btn-whats" id="btnFinalizar" style="width: 100%;">
+        <i class="ti ti-brand-whatsapp"></i>
+        Fechar no WhatsApp
+      </button>
+      <button class="fc-btn-clear-full" id="btnLimpar">
+        <i class="ti ti-trash" style="font-size: 1rem; vertical-align: -2px; margin-right: 6px;"></i>
+        Limpar carrinho
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 · Peças iPhone Premium · Catálogo Atualizado
+</footer>
+
+<!-- MODAL CUSTOMIZADO DE CONFIRMAÇÃO PRA LIMPAR -->
+<div class="modal-overlay" id="modalLimpar">
+  <div class="modal-box">
+    <div class="modal-icon"><i class="ti ti-alert-triangle"></i></div>
+    <h3>Limpar carrinho?</h3>
+    <p>Isso vai remover <strong>todos os itens</strong> e <strong>zerar as quantidades</strong> selecionadas. Esta ação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="modalConfirmNao">Cancelar</button>
+      <button class="modal-btn modal-btn-confirm" id="modalConfirmSim">
+        <i class="ti ti-trash" style="font-size: 0.95rem; vertical-align: -2px; margin-right: 4px;"></i>
+        Sim, limpar tudo
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_LOJA = "5511950801016";
+const NOME_LOJA = "Distribuidora 2K";
+const FAIXA_ATACADO = 6;
+const FAIXA_DISTRIBUIDOR = 11;
+
+const PRODUTOS = [
+  {"id":1,"category":"TELAS HEISTON","model":"iPhone 12/ 12 Pro","varejo":284,"atacado":263,"distribuidor":248},
+  {"id":2,"category":"TELAS HEISTON","model":"iPhone 12 pro Max","varejo":320,"atacado":295,"distribuidor":275},
+  {"id":3,"category":"TELAS HEISTON","model":"iPhone 13 Pro","varejo":297,"atacado":275,"distribuidor":260},
+  {"id":4,"category":"TELAS HEISTON","model":"iPhone 14","varejo":320,"atacado":300,"distribuidor":285},
+  {"id":5,"category":"TELAS HEISTON","model":"iPhone 14 Pro","varejo":420,"atacado":400,"distribuidor":380},
+  {"id":6,"category":"TELAS HEISTON","model":"iPhone 14 Pro Max","varejo":405,"atacado":375,"distribuidor":354},
+  {"id":7,"category":"TELAS HEISTON","model":"iPhone 15","varejo":402,"atacado":372,"distribuidor":351},
+  {"id":8,"category":"TELAS HEISTON","model":"iPhone 15 Pro","varejo":520,"atacado":485,"distribuidor":475},
+  {"id":9,"category":"TELAS HEISTON","model":"iPhone 16","varejo":432,"atacado":400,"distribuidor":377},
+  {"id":10,"category":"TELAS HEISTON","model":"iPhone 16e","varejo":297,"atacado":275,"distribuidor":259},
+  {"id":11,"category":"TELAS HEISTON","model":"iPhone 16 Pro","varejo":620,"atacado":595,"distribuidor":572},
+  {"id":12,"category":"TELAS DIAMONDS PARTS","model":"iPhone XR - LCD","varejo":95,"atacado":85,"distribuidor":80},
+  {"id":13,"category":"TELAS DIAMONDS PARTS","model":"iPhone 11 - LCD","varejo":100,"atacado":90,"distribuidor":85},
+  {"id":14,"category":"TELAS DIAMONDS PARTS","model":"iPhone 12 - 12 Pro","varejo":275,"atacado":254,"distribuidor":244},
+  {"id":15,"category":"TELAS DIAMONDS PARTS","model":"iPhone 12 Max","varejo":315,"atacado":290,"distribuidor":280},
+  {"id":16,"category":"TELAS DIAMONDS PARTS","model":"iPhone 13","varejo":285,"atacado":260,"distribuidor":250},
+  {"id":17,"category":"TELAS DIAMONDS PARTS","model":"iPhone 13 Pro","varejo":310,"atacado":295,"distribuidor":285},
+  {"id":18,"category":"TELAS DIAMONDS PARTS","model":"iPhone 13 Max","varejo":330,"atacado":290,"distribuidor":280},
+  {"id":19,"category":"TELAS DIAMONDS PARTS","model":"iPhone 14","varejo":290,"atacado":270,"distribuidor":260},
+  {"id":20,"category":"TELAS DIAMONDS PARTS","model":"iPhone 14 Pro","varejo":400,"atacado":375,"distribuidor":365},
+  {"id":21,"category":"TELAS DIAMONDS PARTS","model":"iPhone 14 Pro Max","varejo":440,"atacado":425,"distribuidor":415},
+  {"id":22,"category":"TELAS DIAMONDS PARTS","model":"iPhone 15","varejo":380,"atacado":355,"distribuidor":345},
+  {"id":23,"category":"TELAS DIAMONDS PARTS","model":"iPhone 15 Pro","varejo":500,"atacado":465,"distribuidor":455},
+  {"id":24,"category":"TELAS DIAMONDS PARTS","model":"iPhone 15 Pro Max","varejo":550,"atacado":535,"distribuidor":525},
+  {"id":25,"category":"TELAS DIAMONDS PARTS","model":"iPhone 16","varejo":435,"atacado":420,"distribuidor":410},
+  {"id":26,"category":"TELAS DIAMONDS PARTS","model":"iPhone 16 Pro","varejo":600,"atacado":575,"distribuidor":565},
+  {"id":27,"category":"TELAS DIAMONDS PARTS","model":"iPhone 16 Max","varejo":750,"atacado":725,"distribuidor":715},
+  {"id":28,"category":"TELAS DIAMONDS PARTS","model":"iPhone 17 Pro","varejo":725,"atacado":670,"distribuidor":660},
+  {"id":29,"category":"TELAS DIAMONDS PARTS","model":"iPhone 17 Max","varejo":970,"atacado":920,"distribuidor":890},
+  {"id":30,"category":"TELAS UPFIX","model":"iPhone 13 Pro","varejo":340,"atacado":314,"distribuidor":296},
+  {"id":31,"category":"TELAS UPFIX","model":"iPhone 13 Pro Max","varejo":350,"atacado":308,"distribuidor":290},
+  {"id":32,"category":"TELAS UPFIX","model":"iPhone 14 Pro","varejo":580,"atacado":535,"distribuidor":505},
+  {"id":33,"category":"TELAS UPFIX","model":"iPhone 14 Pro Max","varejo":470,"atacado":412,"distribuidor":389},
+  {"id":34,"category":"TELAS UPFIX","model":"iPhone 15 Pro Max","varejo":580,"atacado":497,"distribuidor":469},
+  {"id":35,"category":"TELAS UPFIX","model":"iPhone 16 Pro Max","varejo":800,"atacado":750,"distribuidor":720},
+  {"id":36,"category":"TELAS UPFIX","model":"iPhone 17 Pro Max","varejo":1000,"atacado":950,"distribuidor":920},
+  {"id":37,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 13 Pro","varejo":520,"atacado":null,"distribuidor":null},
+  {"id":38,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 13 Pro Max","varejo":520,"atacado":null,"distribuidor":null},
+  {"id":39,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 14","varejo":500,"atacado":null,"distribuidor":null},
+  {"id":40,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 14 Plus","varejo":550,"atacado":null,"distribuidor":null},
+  {"id":41,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 14 Pro","varejo":600,"atacado":null,"distribuidor":null},
+  {"id":42,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 15","varejo":700,"atacado":null,"distribuidor":null},
+  {"id":43,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 15 Plus","varejo":650,"atacado":null,"distribuidor":null},
+  {"id":44,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 15 Pro","varejo":730,"atacado":null,"distribuidor":null},
+  {"id":45,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 15 Pro Max","varejo":850,"atacado":null,"distribuidor":null},
+  {"id":46,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 16 Pro Max","varejo":1350,"atacado":null,"distribuidor":null},
+  {"id":47,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 17 Pro","varejo":1050,"atacado":null,"distribuidor":null},
+  {"id":48,"category":"TELAS NCC DIAGNOSTICO","model":"iPhone 17 Pro Max","varejo":1450,"atacado":null,"distribuidor":null},
+  {"id":49,"category":"TELAS ORIGINAIS","model":"iPhone 12/ 12 Pro","varejo":400,"atacado":null,"distribuidor":null},
+  {"id":50,"category":"TELAS ORIGINAIS","model":"iPhone 12 pro Max","varejo":750,"atacado":null,"distribuidor":null},
+  {"id":51,"category":"TELAS ORIGINAIS","model":"iPhone 13","varejo":400,"atacado":null,"distribuidor":null},
+  {"id":52,"category":"TELAS ORIGINAIS","model":"iPhone 13 Pro","varejo":700,"atacado":null,"distribuidor":null},
+  {"id":53,"category":"TELAS ORIGINAIS","model":"iPhone 13 Pro Max","varejo":850,"atacado":null,"distribuidor":null},
+  {"id":54,"category":"TELAS ORIGINAIS","model":"iPhone 14","varejo":500,"atacado":null,"distribuidor":null},
+  {"id":55,"category":"TELAS ORIGINAIS","model":"iPhone 14 Plus","varejo":650,"atacado":null,"distribuidor":null},
+  {"id":56,"category":"TELAS ORIGINAIS","model":"iPhone 14 Pro","varejo":840,"atacado":null,"distribuidor":null},
+  {"id":57,"category":"TELAS ORIGINAIS","model":"iPhone 14 Pro Max","varejo":1200,"atacado":null,"distribuidor":null},
+  {"id":58,"category":"TELAS ORIGINAIS","model":"iPhone 15","varejo":600,"atacado":null,"distribuidor":null},
+  {"id":59,"category":"TELAS ORIGINAIS","model":"iPhone 15 Plus","varejo":800,"atacado":null,"distribuidor":null},
+  {"id":60,"category":"TELAS ORIGINAIS","model":"iPhone 15 Pro","varejo":1100,"atacado":null,"distribuidor":null},
+  {"id":61,"category":"TELAS ORIGINAIS","model":"iPhone 15 Pro Max","varejo":1300,"atacado":null,"distribuidor":null},
+  {"id":62,"category":"TELAS ORIGINAIS","model":"iPhone 16","varejo":900,"atacado":null,"distribuidor":null},
+  {"id":63,"category":"TELAS ORIGINAIS","model":"iPhone 16 Plus","varejo":1000,"atacado":null,"distribuidor":null},
+  {"id":64,"category":"TELAS ORIGINAIS","model":"iPhone 16 Pro","varejo":1250,"atacado":null,"distribuidor":null},
+  {"id":65,"category":"TELAS ORIGINAIS","model":"iPhone 16 Pro Max","varejo":1650,"atacado":null,"distribuidor":null},
+  {"id":66,"category":"TELAS ORIGINAIS","model":"iPhone 17","varejo":1200,"atacado":null,"distribuidor":null},
+  {"id":67,"category":"TELAS ORIGINAIS","model":"iPhone 17 Air","varejo":1100,"atacado":null,"distribuidor":null},
+  {"id":68,"category":"TELAS ORIGINAIS","model":"iPhone 17 Pro","varejo":1500,"atacado":null,"distribuidor":null},
+  {"id":69,"category":"TELAS ORIGINAIS","model":"iPhone 17 Pro Max","varejo":2250,"atacado":null,"distribuidor":null},
+  {"id":70,"category":"BATERIA NUCLEAR POWER","model":"iPhone 12/ 12 Pro","varejo":120,"atacado":110,"distribuidor":105},
+  {"id":71,"category":"BATERIA NUCLEAR POWER","model":"iPhone 12 pro Max","varejo":127,"atacado":117,"distribuidor":112},
+  {"id":72,"category":"BATERIA NUCLEAR POWER","model":"iPhone 13","varejo":123,"atacado":113,"distribuidor":108},
+  {"id":73,"category":"BATERIA NUCLEAR POWER","model":"iPhone 13 Pro","varejo":128,"atacado":118,"distribuidor":103},
+  {"id":74,"category":"BATERIA NUCLEAR POWER","model":"iPhone 13 Pro Max","varejo":135,"atacado":125,"distribuidor":120},
+  {"id":75,"category":"BATERIA NUCLEAR POWER","model":"iPhone 14","varejo":129,"atacado":119,"distribuidor":114},
+  {"id":76,"category":"BATERIA NUCLEAR POWER","model":"iPhone 14 Pro","varejo":137,"atacado":127,"distribuidor":122},
+  {"id":77,"category":"BATERIA NUCLEAR POWER","model":"iPhone 14 Pro Max","varejo":143,"atacado":133,"distribuidor":128},
+  {"id":78,"category":"BATERIA NUCLEAR POWER","model":"iPhone 15","varejo":133,"atacado":123,"distribuidor":118},
+  {"id":79,"category":"CAMERAS ORIGINAIS","model":"iPhone 12","varejo":150,"atacado":null,"distribuidor":null},
+  {"id":80,"category":"CAMERAS ORIGINAIS","model":"iPhone 13","varejo":150,"atacado":null,"distribuidor":null},
+  {"id":81,"category":"CAMERAS ORIGINAIS","model":"iPhone 14","varejo":220,"atacado":null,"distribuidor":null},
+  {"id":82,"category":"CAMERAS ORIGINAIS","model":"iPhone 14 Plus","varejo":250,"atacado":null,"distribuidor":null},
+  {"id":83,"category":"CAMERAS ORIGINAIS","model":"iPhone 14 Pro","varejo":280,"atacado":null,"distribuidor":null},
+  {"id":84,"category":"CAMERAS ORIGINAIS","model":"iPhone 14 Pro Max","varejo":280,"atacado":null,"distribuidor":null},
+  {"id":85,"category":"CAMERAS ORIGINAIS","model":"iPhone 15","varejo":200,"atacado":null,"distribuidor":null},
+  {"id":86,"category":"CAMERAS ORIGINAIS","model":"iPhone 15 Plus","varejo":220,"atacado":null,"distribuidor":null},
+  {"id":87,"category":"CAMERAS ORIGINAIS","model":"iPhone 15 Pro Max","varejo":350,"atacado":null,"distribuidor":null},
+  {"id":88,"category":"CAMERAS ORIGINAIS","model":"iPhone 16E","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":89,"category":"CAMERAS ORIGINAIS","model":"iPhone 16","varejo":220,"atacado":null,"distribuidor":null},
+  {"id":90,"category":"CAMERAS ORIGINAIS","model":"iPhone 16 Plus","varejo":220,"atacado":null,"distribuidor":null},
+  {"id":91,"category":"CAMERAS ORIGINAIS","model":"iPhone 16 Pro","varejo":350,"atacado":null,"distribuidor":null},
+  {"id":92,"category":"CAMERAS ORIGINAIS","model":"iPhone 16 Pro Max","varejo":380,"atacado":null,"distribuidor":null},
+  {"id":93,"category":"CAMERAS ORIGINAIS","model":"iPhone 17","varejo":300,"atacado":null,"distribuidor":null},
+  {"id":94,"category":"CAMERAS ORIGINAIS","model":"iPhone 17 Pro","varejo":380,"atacado":null,"distribuidor":null},
+  {"id":95,"category":"FACE ID ORIGINAL","model":"iPhone 16","varejo":500,"atacado":null,"distribuidor":null},
+  {"id":96,"category":"FACE ID ORIGINAL","model":"iPhone 16 Pro","varejo":650,"atacado":null,"distribuidor":null},
+  {"id":97,"category":"FACE ID ORIGINAL","model":"iPhone 16 Pro Max","varejo":750,"atacado":null,"distribuidor":null},
+  {"id":98,"category":"FACE ID ORIGINAL","model":"iPhone 17 Pro","varejo":900,"atacado":null,"distribuidor":null},
+  {"id":99,"category":"FACE ID ORIGINAL","model":"iPhone 17 Pro Max","varejo":1000,"atacado":null,"distribuidor":null},
+  {"id":100,"category":"CONECTOR DE CARGA","model":"iPhone 12 / 12 Pro","varejo":100,"atacado":null,"distribuidor":null},
+  {"id":101,"category":"CONECTOR DE CARGA","model":"iPhone 12 Pro Max","varejo":150,"atacado":null,"distribuidor":null},
+  {"id":102,"category":"CONECTOR DE CARGA","model":"iPhone 13","varejo":100,"atacado":null,"distribuidor":null},
+  {"id":103,"category":"CONECTOR DE CARGA","model":"iPhone 13 Pro","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":104,"category":"CONECTOR DE CARGA","model":"iPhone 13 Pro Max","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":105,"category":"CONECTOR DE CARGA","model":"iPhone 14","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":106,"category":"CONECTOR DE CARGA","model":"iPhone 14 Plus","varejo":200,"atacado":null,"distribuidor":null},
+  {"id":107,"category":"CONECTOR DE CARGA","model":"iPhone 14 Pro","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":108,"category":"CONECTOR DE CARGA","model":"iPhone 14 Pro Max","varejo":180,"atacado":null,"distribuidor":null},
+  {"id":109,"category":"CONECTOR DE CARGA","model":"iPhone 15","varejo":200,"atacado":null,"distribuidor":null},
+  {"id":110,"category":"CONECTOR DE CARGA","model":"iPhone 15 Plus","varejo":200,"atacado":null,"distribuidor":null},
+  {"id":111,"category":"CONECTOR DE CARGA","model":"iPhone 15 Pro","varejo":250,"atacado":null,"distribuidor":null},
+  {"id":112,"category":"CONECTOR DE CARGA","model":"iPhone 15 Pro Max","varejo":250,"atacado":null,"distribuidor":null},
+  {"id":113,"category":"CONECTOR DE CARGA","model":"iPhone 16E","varejo":200,"atacado":null,"distribuidor":null},
+  {"id":114,"category":"CONECTOR DE CARGA","model":"iPhone 16","varejo":230,"atacado":null,"distribuidor":null},
+  {"id":115,"category":"CONECTOR DE CARGA","model":"iPhone 16 Plus","varejo":230,"atacado":null,"distribuidor":null},
+  {"id":116,"category":"CONECTOR DE CARGA","model":"iPhone 16 Pro","varejo":250,"atacado":null,"distribuidor":null},
+  {"id":117,"category":"CONECTOR DE CARGA","model":"iPhone 16 Pro Max","varejo":280,"atacado":null,"distribuidor":null},
+  {"id":118,"category":"CONECTOR DE CARGA","model":"iPhone 17","varejo":280,"atacado":null,"distribuidor":null},
+  {"id":119,"category":"CONECTOR DE CARGA","model":"iPhone 17 Air","varejo":280,"atacado":null,"distribuidor":null},
+  {"id":120,"category":"CONECTOR DE CARGA","model":"iPhone 17 Pro","varejo":300,"atacado":null,"distribuidor":null},
+  {"id":121,"category":"CONECTOR DE CARGA","model":"iPhone 17 Pro Max","varejo":350,"atacado":null,"distribuidor":null},
+  {"id":122,"category":"VIDRO OCA PRO","model":"iPhone 13 / 13 pro","varejo":20,"atacado":null,"distribuidor":null},
+  {"id":123,"category":"VIDRO OCA PRO","model":"iPhone 13 Pro Max","varejo":20,"atacado":null,"distribuidor":null},
+  {"id":124,"category":"VIDRO OCA PRO","model":"iPhone 14 / 16E","varejo":20,"atacado":null,"distribuidor":null},
+  {"id":125,"category":"VIDRO OCA PRO","model":"iPhone 14 Pro","varejo":20,"atacado":null,"distribuidor":null},
+  {"id":126,"category":"VIDRO OCA PRO","model":"iPhone 14 Pro Max","varejo":20,"atacado":null,"distribuidor":null},
+  {"id":127,"category":"VIDRO OCA PRO","model":"iPhone 15","varejo":21,"atacado":null,"distribuidor":null},
+  {"id":128,"category":"VIDRO OCA PRO","model":"iPhone 15 Pro","varejo":22,"atacado":null,"distribuidor":null},
+  {"id":129,"category":"VIDRO OCA PRO","model":"iPhone 15 Pro Max","varejo":22,"atacado":null,"distribuidor":null},
+  {"id":130,"category":"VIDRO OCA PRO","model":"iPhone 16","varejo":22,"atacado":null,"distribuidor":null},
+  {"id":131,"category":"VIDRO OCA PRO","model":"iPhone 16 Pro","varejo":23,"atacado":null,"distribuidor":null},
+  {"id":132,"category":"VIDRO OCA PRO","model":"iPhone 16 Pro Max","varejo":23,"atacado":null,"distribuidor":null},
+  {"id":133,"category":"VIDRO OCA PRO","model":"iPhone 17","varejo":40,"atacado":null,"distribuidor":null},
+  {"id":134,"category":"VIDRO OCA PRO","model":"iPhone 17 Air","varejo":40,"atacado":null,"distribuidor":null},
+  {"id":135,"category":"VIDRO OCA PRO","model":"iPhone 17 Pro","varejo":40,"atacado":null,"distribuidor":null},
+  {"id":136,"category":"VIDRO OCA PRO","model":"iPhone 17 Pro Max","varejo":40,"atacado":null,"distribuidor":null}
+];
+
+const CAT_MAP = {
+  "TELAS HEISTON":        { tab: "Telas",     brand: "Heiston" },
+  "TELAS DIAMONDS PARTS": { tab: "Telas",     brand: "Diamonds Parts" },
+  "TELAS UPFIX":          { tab: "Telas",     brand: "Upfix" },
+  "TELAS NCC DIAGNOSTICO":{ tab: "Telas",     brand: "NCC Diagnóstico" },
+  "TELAS ORIGINAIS":      { tab: "Telas",     brand: "Originais" },
+  "BATERIA NUCLEAR POWER":{ tab: "Baterias",  brand: "Nuclear Power" },
+  "CAMERAS ORIGINAIS":    { tab: "Câmeras",   brand: "Originais" },
+  "FACE ID ORIGINAL":     { tab: "Face ID",   brand: "Originais" },
+  "CONECTOR DE CARGA":    { tab: "Conector de Carga", brand: null },
+  "VIDRO OCA PRO":        { tab: "Vidros",    brand: "OCA Pro" }
+};
+
+const TAB_ICONS = {
+  "Telas":             "ti-device-mobile",
+  "Baterias":          "ti-battery-charging",
+  "Câmeras":           "ti-camera",
+  "Face ID":           "ti-face-id",
+  "Vidros":            "ti-square",
+  "Conector de Carga": "ti-plug-connected"
+};
+const TAB_ORDER = ["Telas", "Baterias", "Câmeras", "Face ID", "Vidros", "Conector de Carga"];
+
+let carrinho = {};
+let abaAtiva = "Telas";
+let cartExpanded = false;
+
+// Estado do checkout
+let checkout = {
+  tipoEntrega: null,      // "frete" ou "retirada"
+  freteSelecionado: null, // { nome, preco, prazo_dias }
+  freteOpcoes: [],        // últimas opções calculadas
+  cepDestino: "",
+};
+
+// URL da função do Netlify (fica relativa, funciona em qualquer domínio)
+const FRETE_API_URL = "/.netlify/functions/calcular-frete";
+
+function salvarLS() {
+  try {
+    localStorage.setItem("carrinho_pecas", JSON.stringify(carrinho));
+    localStorage.setItem("checkout_state", JSON.stringify(checkout));
+    // Salvar inputs preenchidos
+    const inputs = ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"];
+    const dados = {};
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) dados[id] = el.value;
+    });
+    localStorage.setItem("checkout_inputs", JSON.stringify(dados));
+  } catch (e) {}
+}
+function carregarLS() {
+  try {
+    const c = localStorage.getItem("carrinho_pecas");
+    if (c) carrinho = JSON.parse(c);
+    const ck = localStorage.getItem("checkout_state");
+    if (ck) checkout = Object.assign(checkout, JSON.parse(ck));
+    const inp = localStorage.getItem("checkout_inputs");
+    if (inp) {
+      const dados = JSON.parse(inp);
+      Object.keys(dados).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = dados[id];
+      });
+    }
+  } catch (e) {}
+}
+
+function totalPecas() {
+  return Object.values(carrinho).reduce((s, i) => s + i.qtd, 0);
+}
+function faixaAtual() {
+  const t = totalPecas();
+  if (t >= FAIXA_DISTRIBUIDOR) return "distribuidor";
+  if (t >= FAIXA_ATACADO) return "atacado";
+  return "varejo";
+}
+function precoAtual(p) {
+  const f = faixaAtual();
+  return p[f] != null ? p[f] : p.varejo;
+}
+function formatBRL(n) {
+  return "R$ " + Number(n).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+function nomeTier(t) {
+  return { varejo: "Varejo", atacado: "Atacado", distribuidor: "Distribuidor" }[t];
+}
+function temMultiTier(p) {
+  return p.atacado != null && p.distribuidor != null;
+}
+
+function renderAbas() {
+  const bar = document.getElementById("tabsBar");
+  bar.innerHTML = TAB_ORDER.map(t => {
+    const count = PRODUTOS.filter(p => CAT_MAP[p.category] && CAT_MAP[p.category].tab === t).length;
+    const ativo = t === abaAtiva ? "active" : "";
+    const icon = TAB_ICONS[t] || "ti-circle";
+    return `<button class="tab ${ativo}" data-tab="${t}">
+      <i class="ti ${icon}"></i>${t}<span class="count">${count}</span>
+    </button>`;
+  }).join("");
+  bar.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
+    abaAtiva = b.dataset.tab;
+    document.getElementById("busca").value = "";
+    renderAbas();
+    renderConteudo();
+  }));
+}
+
+function renderConteudo() {
+  const busca = document.getElementById("busca").value.toLowerCase().trim();
+  const container = document.getElementById("brandsContainer");
+  const f = faixaAtual();
+
+  const naAba = PRODUTOS.filter(p => CAT_MAP[p.category] && CAT_MAP[p.category].tab === abaAtiva);
+  const filtrados = naAba.filter(p => !busca || p.model.toLowerCase().includes(busca));
+  document.getElementById("metaCount").textContent = filtrados.length;
+
+  if (filtrados.length === 0) {
+    container.innerHTML = '<div class="empty-state"><i class="ti ti-mood-empty"></i><p>Nenhuma peça encontrada</p></div>';
+    return;
+  }
+
+  const porMarca = {};
+  filtrados.forEach(p => {
+    const brand = CAT_MAP[p.category].brand || "_no_brand_";
+    if (!porMarca[brand]) porMarca[brand] = [];
+    porMarca[brand].push(p);
+  });
+
+  const brands = Object.keys(porMarca);
+  container.innerHTML = brands.map(b => {
+    const items = porMarca[b];
+    const hasMulti = items.some(temMultiTier);
+    const showHeader = b !== "_no_brand_";
+    return `
+      <div class="brand-section">
+        ${showHeader ? `
+          <div class="brand-header">
+            <h2>${b}</h2>
+            <span class="brand-line"></span>
+            <span class="brand-count">${items.length} ${items.length > 1 ? 'modelos' : 'modelo'}</span>
+          </div>
+        ` : ''}
+        ${tabelaHTML(items, hasMulti, f)}
+      </div>
+    `;
+  }).join("");
+
+  container.querySelectorAll(".qty-btn").forEach(b => b.addEventListener("click", () => {
+    const id = +b.dataset.id;
+    if (b.dataset.op === "+") addItem(id);
+    else removeItem(id);
+  }));
+}
+
+function tabelaHTML(items, hasMulti, f) {
+  let header;
+  if (hasMulti) {
+    header = `
+      <th>Modelo</th>
+      <th class="col-price ${f === 'varejo' ? 'tier-active' : ''}">Varejo</th>
+      <th class="col-price ${f === 'atacado' ? 'tier-active' : ''}">Atacado</th>
+      <th class="col-price ${f === 'distribuidor' ? 'tier-active' : ''}">Distribuidor</th>
+      <th class="col-qty">Quantidade</th>
+    `;
+  } else {
+    header = `
+      <th>Modelo</th>
+      <th class="col-price">Preço</th>
+      <th class="col-qty">Quantidade</th>
+    `;
+  }
+
+  const rows = items.map(p => {
+    const noCart = carrinho[p.id] ? carrinho[p.id].qtd : 0;
+    const inCartClass = noCart > 0 ? 'in-cart' : '';
+    const qtyCell = `
+      <td class="qty">
+        <div class="qty-control">
+          <button class="qty-btn" data-id="${p.id}" data-op="-" ${noCart === 0 ? 'disabled' : ''}><i class="ti ti-minus"></i></button>
+          <span class="qty-display ${noCart > 0 ? 'has-qty' : ''}">${noCart}</span>
+          <button class="qty-btn" data-id="${p.id}" data-op="+"><i class="ti ti-plus"></i></button>
+        </div>
+      </td>
+    `;
+
+    if (hasMulti) {
+      // Cada linha pode ter ou não os 3 preços. Se não tiver, mostra "—" nas vazias.
+      const hasTiersThis = temMultiTier(p);
+      return `
+        <tr class="${inCartClass}">
+          <td class="model">${p.model}</td>
+          <td class="price ${f === 'varejo' ? 'tier-active' : ''}">${formatBRL(p.varejo)}</td>
+          ${hasTiersThis
+            ? `<td class="price ${f === 'atacado' ? 'tier-active' : ''}">${formatBRL(p.atacado)}</td>`
+            : `<td class="price empty">—</td>`
+          }
+          ${hasTiersThis
+            ? `<td class="price ${f === 'distribuidor' ? 'tier-active' : ''}">${formatBRL(p.distribuidor)}</td>`
+            : `<td class="price empty">—</td>`
+          }
+          ${qtyCell}
+        </tr>
+      `;
+    } else {
+      return `
+        <tr class="${inCartClass}">
+          <td class="model">${p.model}</td>
+          <td class="price single">${formatBRL(p.varejo)}</td>
+          ${qtyCell}
+        </tr>
+      `;
+    }
+  }).join("");
+
+  return `
+    <div class="price-table-wrap">
+      <table class="price-table">
+        <thead><tr>${header}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ====== CARRINHO FLUTUANTE ======
+function renderFloatingCart() {
+  const items = Object.values(carrinho);
+  const total = totalPecas();
+  const cart = document.getElementById("floatingCart");
+
+  // Mostrar/esconder
+  if (total > 0) {
+    cart.classList.add("show");
+  } else {
+    cart.classList.remove("show");
+    cart.classList.remove("expanded");
+    cartExpanded = false;
+    return;
+  }
+
+  // Atualiza preços
+  items.forEach(i => {
+    const p = PRODUTOS.find(x => x.id === i.id);
+    if (p) i.precoAplicado = precoAtual(p);
+  });
+
+  const totalValor = items.reduce((s, i) => s + i.precoAplicado * i.qtd, 0);
+  const f = faixaAtual();
+
+  // Versão recolhida — mostra total final (com frete se houver)
+  const totalComFrete = totalValor + (checkout.freteSelecionado ? checkout.freteSelecionado.preco : 0);
+  document.getElementById("fcCount").textContent = total;
+  document.getElementById("fcTotalMini").textContent = formatBRL(totalComFrete);
+
+  // Versão expandida
+  document.getElementById("fcTierBadge").textContent = nomeTier(f);
+  document.getElementById("fcSubtotal").textContent = formatBRL(totalValor);
+  document.getElementById("fcTotal").textContent = formatBRL(totalComFrete);
+
+  // Linha de frete
+  if (checkout.freteSelecionado) {
+    document.getElementById("rowFrete").style.display = "flex";
+    document.getElementById("rowFreteNome").textContent = checkout.freteSelecionado.nome;
+    document.getElementById("fcFreteValor").textContent = formatBRL(checkout.freteSelecionado.preco);
+  } else {
+    document.getElementById("rowFrete").style.display = "none";
+  }
+
+  // Items
+  const body = document.getElementById("fcBody");
+  body.innerHTML = items.map(i => {
+    const meta = CAT_MAP[i.category] || {};
+    const ref = meta.brand ? `${meta.tab} · ${meta.brand}` : meta.tab;
+    return `
+      <div class="fc-item">
+        <div class="fc-item-info">
+          <div class="fc-item-meta">${ref}</div>
+          <div class="fc-item-name">${i.model}</div>
+          <div class="fc-item-price">${formatBRL(i.precoAplicado)} cada</div>
+        </div>
+        <div class="fc-item-qty qty-control">
+          <button class="qty-btn fc-qty" data-id="${i.id}" data-op="-"><i class="ti ti-minus"></i></button>
+          <span class="qty-display has-qty">${i.qtd}</span>
+          <button class="qty-btn fc-qty" data-id="${i.id}" data-op="+"><i class="ti ti-plus"></i></button>
+        </div>
+        <div class="fc-item-total">${formatBRL(i.precoAplicado * i.qtd)}</div>
+      </div>
+    `;
+  }).join("");
+
+  // Progress
+  const prog = document.getElementById("fcProgress");
+  const progText = document.getElementById("fcProgressText");
+  if (f === "varejo" && total < FAIXA_ATACADO) {
+    const falta = FAIXA_ATACADO - total;
+    prog.style.display = "flex";
+    progText.innerHTML = `Falta <strong>${falta} pç</strong> para preço de <strong>atacado</strong>`;
+  } else if (f === "atacado" && total < FAIXA_DISTRIBUIDOR) {
+    const falta = FAIXA_DISTRIBUIDOR - total;
+    prog.style.display = "flex";
+    progText.innerHTML = `Falta <strong>${falta} pç</strong> para preço de <strong>distribuidor</strong>`;
+  } else if (f === "distribuidor") {
+    prog.style.display = "flex";
+    progText.innerHTML = `🎯 Você está no <strong>melhor preço</strong>`;
+  } else {
+    prog.style.display = "none";
+  }
+
+  body.querySelectorAll(".fc-qty").forEach(b => b.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const id = +b.dataset.id;
+    if (b.dataset.op === "+") addItem(id);
+    else removeItem(id);
+  }));
+}
+
+function addItem(id) {
+  const p = PRODUTOS.find(x => x.id === id);
+  if (!p) return;
+  if (!carrinho[id]) {
+    carrinho[id] = { id: p.id, category: p.category, model: p.model, qtd: 1 };
+  } else {
+    carrinho[id].qtd++;
+  }
+  // Auto-expandir o carrinho quando adiciona o primeiro item
+  const eraVazio = Object.keys(carrinho).length === 1 && carrinho[id].qtd === 1;
+  if (eraVazio) {
+    setTimeout(() => {
+      document.getElementById("floatingCart").classList.add("expanded");
+      cartExpanded = true;
+    }, 200);
+  }
+  salvarLS();
+  renderConteudo();
+  renderFloatingCart();
+}
+
+function removeItem(id) {
+  if (!carrinho[id]) return;
+  carrinho[id].qtd--;
+  if (carrinho[id].qtd <= 0) delete carrinho[id];
+  salvarLS();
+  renderConteudo();
+  renderFloatingCart();
+}
+
+// ============================================================
+//   CHECKOUT — Entrega, Frete, Validações
+// ============================================================
+
+// Máscaras
+function mascararCEP(v) {
+  v = v.replace(/\D/g, "").slice(0, 8);
+  if (v.length > 5) v = v.slice(0, 5) + "-" + v.slice(5);
+  return v;
+}
+function mascararCpfCnpj(v) {
+  v = v.replace(/\D/g, "");
+  if (v.length <= 11) {
+    // CPF: 000.000.000-00
+    v = v.slice(0, 11);
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  } else {
+    // CNPJ: 00.000.000/0000-00
+    v = v.slice(0, 14);
+    v = v.replace(/^(\d{2})(\d)/, "$1.$2");
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+    v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
+    v = v.replace(/(\d{4})(\d)/, "$1-$2");
+  }
+  return v;
+}
+
+// Validar CPF (algoritmo oficial)
+function validarCPF(cpf) {
+  cpf = cpf.replace(/\D/g, "");
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+  let soma = 0, resto;
+  for (let i = 1; i <= 9; i++) soma += parseInt(cpf.charAt(i-1)) * (11-i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.charAt(9))) return false;
+  soma = 0;
+  for (let i = 1; i <= 10; i++) soma += parseInt(cpf.charAt(i-1)) * (12-i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  return resto === parseInt(cpf.charAt(10));
+}
+function validarCNPJ(cnpj) {
+  cnpj = cnpj.replace(/\D/g, "");
+  if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
+  let tamanho = 12, numeros = cnpj.substring(0, tamanho);
+  const digitos = cnpj.substring(tamanho);
+  let soma = 0, pos = tamanho - 7;
+  for (let i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+  if (resultado != digitos.charAt(0)) return false;
+  tamanho++; numeros = cnpj.substring(0, tamanho);
+  soma = 0; pos = tamanho - 7;
+  for (let i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+  return resultado == digitos.charAt(1);
+}
+function validarCpfOuCnpj(v) {
+  const num = v.replace(/\D/g, "");
+  if (num.length === 11) return validarCPF(num);
+  if (num.length === 14) return validarCNPJ(num);
+  return false;
+}
+
+// Aplica máscaras nos inputs
+function setupMascaras() {
+  const cep = document.getElementById("cepDestino");
+  if (cep) cep.addEventListener("input", (e) => { e.target.value = mascararCEP(e.target.value); });
+  const doc = document.getElementById("endCpfCnpj");
+  if (doc) doc.addEventListener("input", (e) => { e.target.value = mascararCpfCnpj(e.target.value); });
+  // Salvar no LS conforme digita
+  ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", () => {
+      el.classList.remove("invalid");
+      const err = document.getElementById("err" + id.charAt(0).toUpperCase() + id.slice(1));
+      if (err) err.classList.remove("show");
+      salvarLS();
+    });
+  });
+  // Forçar UF em maiúsculas
+  const ufEl = document.getElementById("endUF");
+  if (ufEl) {
+    ufEl.addEventListener("input", (e) => {
+      e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
+    });
+  }
+}
+
+// Trocar entre Frete x Retirada
+function setTipoEntrega(tipo) {
+  checkout.tipoEntrega = tipo;
+  // Limpa frete selecionado se mudou pra retirada
+  if (tipo === "retirada") checkout.freteSelecionado = null;
+  document.getElementById("optFrete").classList.toggle("active", tipo === "frete");
+  document.getElementById("optRetirada").classList.toggle("active", tipo === "retirada");
+  document.getElementById("boxFrete").style.display = tipo === "frete" ? "block" : "none";
+  document.getElementById("boxRetirada").style.display = tipo === "retirada" ? "block" : "none";
+  salvarLS();
+  renderFloatingCart();
+}
+
+// Calcular frete via Netlify Function
+async function calcularFrete() {
+  const cepInput = document.getElementById("cepDestino");
+  const cep = cepInput.value.replace(/\D/g, "");
+  const errCep = document.getElementById("errCep");
+  const msg = document.getElementById("freteMsg");
+  const opcoesDiv = document.getElementById("freteOpcoes");
+  const btn = document.getElementById("btnCalcFrete");
+
+  if (cep.length !== 8) {
+    cepInput.classList.add("invalid");
+    errCep.classList.add("show");
+    return;
+  }
+  cepInput.classList.remove("invalid");
+  errCep.classList.remove("show");
+
+  // Valor declarado = subtotal do pedido
+  const items = Object.values(carrinho);
+  items.forEach(i => {
+    const p = PRODUTOS.find(x => x.id === i.id);
+    if (p) i.precoAplicado = precoAtual(p);
+  });
+  const subtotal = items.reduce((s, i) => s + i.precoAplicado * i.qtd, 0);
+
+  // UI: carregando
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculando...';
+  msg.style.display = "none";
+  opcoesDiv.style.display = "none";
+  opcoesDiv.innerHTML = "";
+
+  try {
+    const resp = await fetch(FRETE_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cepDestino: cep, valorDeclarado: subtotal }),
+    });
+    const data = await resp.json();
+
+    if (!resp.ok) {
+      msg.textContent = data.error || "Erro ao calcular o frete. Tente novamente.";
+      msg.classList.remove("info");
+      msg.style.display = "block";
+      return;
+    }
+
+    if (!data.opcoes || data.opcoes.length === 0) {
+      msg.textContent = data.aviso || "Nenhuma opção de frete disponível para este CEP.";
+      msg.classList.remove("info");
+      msg.style.display = "block";
+      return;
+    }
+
+    checkout.freteOpcoes = data.opcoes;
+    checkout.cepDestino = cep;
+    renderFreteOpcoes(data.opcoes);
+  } catch (err) {
+    msg.textContent = "Erro de conexão. Verifique sua internet.";
+    msg.classList.remove("info");
+    msg.style.display = "block";
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-calculator"></i> Calcular';
+  }
+}
+
+function renderFreteOpcoes(opcoes) {
+  const div = document.getElementById("freteOpcoes");
+  div.style.display = "flex";
+  div.innerHTML = opcoes.map((o, idx) => `
+    <div class="frete-opt" data-idx="${idx}">
+      <div class="frete-opt-info">
+        <div class="frete-opt-radio"></div>
+        <div>
+          <div class="frete-opt-name">${o.nome}</div>
+          <div class="frete-opt-prazo">Entrega em ${o.prazo_dias} dia${o.prazo_dias > 1 ? 's' : ''} úteis</div>
+        </div>
+      </div>
+      <div class="frete-opt-preco">${formatBRL(o.preco)}</div>
+    </div>
+  `).join("");
+  div.querySelectorAll(".frete-opt").forEach(el => {
+    el.addEventListener("click", () => selecionarFrete(+el.dataset.idx));
+  });
+}
+
+function selecionarFrete(idx) {
+  const op = checkout.freteOpcoes[idx];
+  if (!op) return;
+  checkout.freteSelecionado = op;
+  document.querySelectorAll(".frete-opt").forEach((el, i) => {
+    el.classList.toggle("selected", i === idx);
+  });
+  // Mostra resumo e form de endereço
+  const resumo = document.getElementById("freteResumo");
+  resumo.style.display = "block";
+  resumo.innerHTML = `
+    <div><strong>${op.nome}</strong> — ${formatBRL(op.preco)} · ${op.prazo_dias} dia${op.prazo_dias>1?'s':''} úteis</div>
+    <button type="button" class="change-link" onclick="document.getElementById('freteResumo').style.display='none'; document.getElementById('freteOpcoes').style.display='flex';">Trocar opção</button>
+  `;
+  document.getElementById("freteOpcoes").style.display = "none";
+  document.getElementById("formEndereco").style.display = "block";
+  salvarLS();
+  renderFloatingCart();
+}
+
+// Validar antes de enviar pro WhatsApp
+function validarCheckout() {
+  let ok = true;
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("invalid");
+    const errId = "err" + id.charAt(0).toUpperCase() + id.slice(1);
+    const err = document.getElementById(errId);
+    if (err) {
+      if (msg) err.textContent = msg;
+      err.classList.add("show");
+    }
+    ok = false;
+  }
+
+  if (!checkout.tipoEntrega) {
+    alert("Selecione uma forma de entrega: Calcular Frete ou Retirar na Loja.");
+    return false;
+  }
+
+  if (checkout.tipoEntrega === "frete") {
+    if (!checkout.freteSelecionado) {
+      alert("Calcule o frete e selecione uma opção (PAC ou SEDEX) antes de finalizar.");
+      return false;
+    }
+    const campos = [
+      { id: "endNome", min: 3 },
+      { id: "endRua", min: 2 },
+      { id: "endNumero", min: 1 },
+      { id: "endBairro", min: 2 },
+      { id: "endCidade", min: 2 },
+      { id: "endUF", min: 2 },
+    ];
+    campos.forEach(c => {
+      const el = document.getElementById(c.id);
+      const v = el.value.trim();
+      if (v.length < c.min) showErr(c.id);
+    });
+    const docVal = document.getElementById("endCpfCnpj").value;
+    if (!validarCpfOuCnpj(docVal)) {
+      showErr("endCpfCnpj", "CPF ou CNPJ inválido");
+    }
+  } else if (checkout.tipoEntrega === "retirada") {
+    const v = document.getElementById("retNome").value.trim();
+    if (v.length < 3) showErr("retNome");
+  }
+
+  return ok;
+}
+
+const CART_API_URL = "/.netlify/functions/adicionar-carrinho-me";
+
+async function finalizarWhatsApp() {
+  const items = Object.values(carrinho);
+  if (items.length === 0) return;
+
+  if (!validarCheckout()) {
+    const firstErr = document.querySelector(".field input.invalid");
+    if (firstErr) firstErr.scrollIntoView({behavior: "smooth", block: "center"});
+    return;
+  }
+
+  const f = faixaAtual();
+  items.forEach(i => {
+    const p = PRODUTOS.find(x => x.id === i.id);
+    if (p) i.precoAplicado = precoAtual(p);
+  });
+  const subtotal = items.reduce((s, i) => s + i.precoAplicado * i.qtd, 0);
+  const freteVal = checkout.freteSelecionado ? checkout.freteSelecionado.preco : 0;
+  const total = subtotal + freteVal;
+
+  // ============================================================
+  // Se for FRETE, primeiro cria a etiqueta no carrinho do Melhor Envio
+  // ============================================================
+  let idEnvioME = null;
+  if (checkout.tipoEntrega === "frete") {
+    // UI: bloqueia botão
+    const btn = document.getElementById("btnFinalizar");
+    const textoOriginal = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="border-color: rgba(255,255,255,0.5); border-top-color: transparent;"></span> Preparando etiqueta...';
+
+    const payload = {
+      servico_id: checkout.freteSelecionado.id,
+      cliente: {
+        nome: document.getElementById("endNome").value.trim(),
+        documento: document.getElementById("endCpfCnpj").value.trim(),
+      },
+      endereco_destino: {
+        cep: checkout.cepDestino,
+        rua: document.getElementById("endRua").value.trim(),
+        numero: document.getElementById("endNumero").value.trim(),
+        bairro: document.getElementById("endBairro").value.trim(),
+        cidade: document.getElementById("endCidade").value.trim(),
+        uf: document.getElementById("endUF").value.trim().toUpperCase(),
+      },
+      itens: items.map(i => ({
+        nome: i.model + " (" + (CAT_MAP[i.category]?.tab || "") + ")",
+        qtd: i.qtd,
+        preco_unitario: i.precoAplicado,
+      })),
+      valor_total: subtotal,
+    };
+
+    try {
+      const resp = await fetch(CART_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await resp.json();
+
+      if (resp.ok && data.sucesso) {
+        idEnvioME = data.id_envio;
+      } else {
+        // Mesmo se der erro, deixa o cliente continuar (manda pelo WhatsApp normalmente)
+        console.warn("Falha ao criar no Melhor Envio:", data);
+      }
+    } catch (err) {
+      console.warn("Erro de rede ao criar no Melhor Envio:", err);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = textoOriginal;
+    }
+  }
+
+  // ============================================================
+  // Monta mensagem do WhatsApp
+  // ============================================================
+  let msg = `*Pedido — ${NOME_LOJA}*\n\n`;
+
+  if (checkout.tipoEntrega === "frete") {
+    msg += `*Cliente:* ${document.getElementById("endNome").value.trim()}\n`;
+    msg += `*CPF/CNPJ:* ${document.getElementById("endCpfCnpj").value.trim()}\n\n`;
+    msg += `*📦 Entrega: ${checkout.freteSelecionado.nome}*\n`;
+    msg += `_(${formatBRL(freteVal)} · ${checkout.freteSelecionado.prazo_dias} dia${checkout.freteSelecionado.prazo_dias>1?'s':''} úteis)_\n`;
+    msg += `${document.getElementById("endRua").value.trim()}, ${document.getElementById("endNumero").value.trim()}\n`;
+    msg += `${document.getElementById("endBairro").value.trim()} · ${document.getElementById("endCidade").value.trim()}/${document.getElementById("endUF").value.trim().toUpperCase()}\n`;
+    msg += `CEP: ${mascararCEP(checkout.cepDestino)}\n\n`;
+    if (idEnvioME) {
+      msg += `_📋 Etiqueta criada no Melhor Envio_\n_ID: ${idEnvioME}_\n\n`;
+    }
+  } else {
+    msg += `*Cliente:* ${document.getElementById("retNome").value.trim()}\n\n`;
+    msg += `*🏪 Retirada na loja*\n\n`;
+  }
+
+  msg += `*Tabela:* ${nomeTier(f)} (${totalPecas()} peças)\n\n`;
+  msg += `━━━━━━━━━━━━━━━━━━\n\n`;
+  items.forEach((i, idx) => {
+    const meta = CAT_MAP[i.category] || {};
+    const ref = meta.brand ? `${meta.tab} ${meta.brand}` : meta.tab;
+    msg += `${idx+1}. *${i.model}*\n`;
+    msg += `    ${ref}\n`;
+    msg += `    ${i.qtd}x ${formatBRL(i.precoAplicado)} = *${formatBRL(i.precoAplicado * i.qtd)}*\n\n`;
+  });
+  msg += `━━━━━━━━━━━━━━━━━━\n`;
+  msg += `Subtotal: ${formatBRL(subtotal)}\n`;
+  if (freteVal > 0) msg += `Frete: ${formatBRL(freteVal)}\n`;
+  msg += `*TOTAL: ${formatBRL(total)}*`;
+
+  const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+}
+
+document.getElementById("busca").addEventListener("input", renderConteudo);
+document.getElementById("fcCollapsed").addEventListener("click", () => {
+  document.getElementById("floatingCart").classList.add("expanded");
+  cartExpanded = true;
+});
+document.getElementById("fcMinimize").addEventListener("click", () => {
+  document.getElementById("floatingCart").classList.remove("expanded");
+  cartExpanded = false;
+});
+document.getElementById("btnFinalizar").addEventListener("click", finalizarWhatsApp);
+
+// Entrega: Frete x Retirada
+document.getElementById("optFrete").addEventListener("click", () => setTipoEntrega("frete"));
+document.getElementById("optRetirada").addEventListener("click", () => setTipoEntrega("retirada"));
+document.getElementById("btnCalcFrete").addEventListener("click", calcularFrete);
+
+// Permitir Enter no CEP pra calcular
+document.getElementById("cepDestino").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { e.preventDefault(); calcularFrete(); }
+});
+document.getElementById("btnLimpar").addEventListener("click", () => {
+  if (Object.keys(carrinho).length === 0) {
+    // Mesmo vazio, mostra confirmação pra dar feedback
+    alert("O carrinho já está vazio.");
+    return;
+  }
+  abrirConfirmacaoLimpar();
+});
+
+function abrirConfirmacaoLimpar() {
+  document.getElementById("modalLimpar").classList.add("open");
+}
+function fecharConfirmacaoLimpar() {
+  document.getElementById("modalLimpar").classList.remove("open");
+}
+function executarLimpar() {
+  // 1. Zera carrinho e checkout
+  carrinho = {};
+  checkout = {
+    tipoEntrega: null,
+    freteSelecionado: null,
+    freteOpcoes: [],
+    cepDestino: "",
+  };
+  // 2. Atualiza localStorage
+  try {
+    localStorage.setItem("carrinho_pecas", JSON.stringify({}));
+    localStorage.removeItem("checkout_state");
+    localStorage.removeItem("checkout_inputs");
+  } catch (e) {}
+  // 3. Limpa todos os inputs do checkout
+  ["endNome","endRua","endNumero","endBairro","endCidade","endUF","endCpfCnpj","retNome","cepDestino"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ""; el.classList.remove("invalid"); }
+  });
+  document.querySelectorAll(".field-error").forEach(e => e.classList.remove("show"));
+  // 4. Reset visual da entrega
+  document.getElementById("optFrete").classList.remove("active");
+  document.getElementById("optRetirada").classList.remove("active");
+  document.getElementById("boxFrete").style.display = "none";
+  document.getElementById("boxRetirada").style.display = "none";
+  document.getElementById("freteOpcoes").style.display = "none";
+  document.getElementById("freteOpcoes").innerHTML = "";
+  document.getElementById("freteResumo").style.display = "none";
+  document.getElementById("formEndereco").style.display = "none";
+  document.getElementById("freteMsg").style.display = "none";
+  // 5. Re-renderiza tabela (volta tudo pra qtd 0)
+  renderConteudo();
+  // 6. Esconde carrinho flutuante
+  const cart = document.getElementById("floatingCart");
+  cart.classList.remove("expanded");
+  cart.classList.remove("show");
+  cartExpanded = false;
+  // 7. Fecha modal
+  fecharConfirmacaoLimpar();
+}
+
+document.getElementById("modalConfirmSim").addEventListener("click", executarLimpar);
+document.getElementById("modalConfirmNao").addEventListener("click", fecharConfirmacaoLimpar);
+document.getElementById("modalLimpar").addEventListener("click", (e) => {
+  if (e.target.id === "modalLimpar") fecharConfirmacaoLimpar();
+});
+
+carregarLS();
+setupMascaras();
+renderAbas();
+renderConteudo();
+renderFloatingCart();
+
+// Restaurar estado do checkout (entrega + frete selecionado)
+if (checkout.tipoEntrega) {
+  setTipoEntrega(checkout.tipoEntrega);
+  if (checkout.tipoEntrega === "frete" && checkout.freteSelecionado) {
+    // Mostra o resumo do frete escolhido e o form de endereço
+    document.getElementById("freteResumo").style.display = "block";
+    const op = checkout.freteSelecionado;
+    document.getElementById("freteResumo").innerHTML = `
+      <div><strong>${op.nome}</strong> — ${formatBRL(op.preco)} · ${op.prazo_dias} dia${op.prazo_dias>1?'s':''} úteis</div>
+      <button type="button" class="change-link" onclick="document.getElementById('freteResumo').style.display='none'; if(checkout.freteOpcoes.length) { renderFreteOpcoes(checkout.freteOpcoes); }">Trocar opção</button>
+    `;
+    document.getElementById("formEndereco").style.display = "block";
+  }
+}
+</script>
+</body>
+</html>
