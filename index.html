@@ -2325,6 +2325,12 @@ async function finalizarWhatsApp() {
 
   // Fecha o modal depois de finalizar
   fecharModalEndereco();
+
+  // Limpa o carrinho automaticamente após o pedido ser enviado
+  // (assim na próxima visita o cliente começa limpo)
+  setTimeout(() => {
+    executarLimpar();
+  }, 1500);
 }
 
 document.getElementById("busca").addEventListener("input", renderConteudo);
@@ -2378,6 +2384,8 @@ function fecharConfirmacaoLimpar() {
   document.getElementById("modalLimpar").classList.remove("open");
 }
 function executarLimpar() {
+  console.log("[Limpar] Iniciando limpeza completa do carrinho...");
+
   // 1. Zera carrinho e checkout
   carrinho = {};
   checkout = {
@@ -2386,21 +2394,36 @@ function executarLimpar() {
     freteOpcoes: [],
     cepDestino: "",
   };
-  // 2. Atualiza localStorage
+
+  // 2. APAGA tudo do localStorage (não sobrescreve, REMOVE)
   try {
-    localStorage.setItem("carrinho_pecas", JSON.stringify({}));
+    localStorage.removeItem("carrinho_pecas");
     localStorage.removeItem("checkout_state");
     localStorage.removeItem("checkout_inputs");
-  } catch (e) {}
+    localStorage.removeItem("cliente_nome");
+    // Por segurança, percorre todas as chaves e remove qualquer uma relacionada
+    const chaves = Object.keys(localStorage);
+    chaves.forEach(k => {
+      if (k.includes("carrinho") || k.includes("checkout") || k.includes("cliente")) {
+        localStorage.removeItem(k);
+      }
+    });
+    console.log("[Limpar] localStorage limpo");
+  } catch (e) {
+    console.error("[Limpar] Erro ao limpar localStorage:", e);
+  }
+
   // 3. Limpa todos os inputs do checkout
   ["modalNome","modalRua","modalNumero","modalComplemento","modalBairro","modalCidade","modalUF","modalCpfCnpj","modalCep","retNome","cepDestino"].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.value = ""; el.classList.remove("invalid"); }
   });
   document.querySelectorAll(".field-error").forEach(e => e.classList.remove("show"));
+
   // Status do CEP
   const statusEl = document.getElementById("cepStatus");
   if (statusEl) statusEl.classList.remove("show");
+
   // 4. Reset visual da entrega
   document.getElementById("optFrete").classList.remove("active");
   document.getElementById("optRetirada").classList.remove("active");
@@ -2410,17 +2433,21 @@ function executarLimpar() {
   document.getElementById("freteOpcoes").innerHTML = "";
   document.getElementById("freteResumo").style.display = "none";
   document.getElementById("freteMsg").style.display = "none";
-  // Fecha modal de endereço se estiver aberto
+
+  // 5. Fecha modais que estiverem abertos
   fecharModalEndereco();
-  // 5. Re-renderiza tabela (volta tudo pra qtd 0)
+  fecharConfirmacaoLimpar();
+
+  // 6. Re-renderiza tabela (volta tudo pra qtd 0)
   renderConteudo();
-  // 6. Esconde carrinho flutuante
+
+  // 7. Esconde carrinho flutuante
   const cart = document.getElementById("floatingCart");
   cart.classList.remove("expanded");
   cart.classList.remove("show");
   cartExpanded = false;
-  // 7. Fecha modal
-  fecharConfirmacaoLimpar();
+
+  console.log("[Limpar] ✅ Limpeza concluída");
 }
 
 document.getElementById("modalConfirmSim").addEventListener("click", executarLimpar);
