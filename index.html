@@ -299,6 +299,34 @@
     .qty-display { min-width: 36px; height: 34px; font-size: 0.92rem; }
   }
 
+  /* Botão flutuante de Limpar - sempre visível quando carrinho não está vazio */
+  .fab-clear {
+    position: fixed;
+    bottom: 96px;
+    left: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    z-index: 41;
+    transition: all 0.2s;
+  }
+  .fab-clear.show { display: flex; }
+  .fab-clear:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+    transform: scale(1.05);
+  }
+  .fab-clear i { font-size: 1.2rem; }
+
   /* ====== CARRINHO FLUTUANTE (FAB esquerdo) ====== */
   .floating-cart {
     position: fixed;
@@ -1078,6 +1106,11 @@
   <div id="brandsContainer"></div>
 </div>
 
+<!-- Botão flutuante de Limpar Carrinho (sempre acessível) -->
+<button class="fab-clear" id="btnLimparFAB" title="Limpar carrinho" aria-label="Limpar carrinho">
+  <i class="ti ti-trash"></i>
+</button>
+
 <!-- CARRINHO FLUTUANTE (canto inferior esquerdo) -->
 <div class="floating-cart" id="floatingCart">
   <!-- Collapsed: aparece como pill clicável -->
@@ -1298,6 +1331,27 @@ const WHATSAPP_LOJA = "5511950801016";
 const NOME_LOJA = "Distribuidora 2K";
 const FAIXA_ATACADO = 6;
 const FAIXA_DISTRIBUIDOR = 11;
+
+// Versão do app — quando você muda esse número, todos os clientes
+// vão automaticamente abrir o site com carrinho zerado na próxima visita.
+// Aumenta o número (ex: "v2", "v3"...) quando quiser forçar limpeza global.
+const APP_VERSION = "v2";
+
+// Verifica se a versão mudou — se sim, limpa tudo
+try {
+  const versaoSalva = localStorage.getItem("app_version");
+  if (versaoSalva !== APP_VERSION) {
+    // Versão diferente (ou nunca usou): limpa tudo do carrinho antigo
+    const chaves = Object.keys(localStorage);
+    chaves.forEach(k => {
+      if (k.includes("carrinho") || k.includes("checkout") || k.includes("cliente")) {
+        localStorage.removeItem(k);
+      }
+    });
+    localStorage.setItem("app_version", APP_VERSION);
+    console.log("[App] Cache limpo - nova versão:", APP_VERSION);
+  }
+} catch(e) {}
 
 const PRODUTOS = [
   {"id":1,"category":"TELAS HEISTON","model":"iPhone 12/ 12 Pro","varejo":284,"atacado":263,"distribuidor":248},
@@ -1670,14 +1724,17 @@ function renderFloatingCart() {
   const items = Object.values(carrinho);
   const total = totalPecas();
   const cart = document.getElementById("floatingCart");
+  const fabClear = document.getElementById("btnLimparFAB");
 
   // Mostrar/esconder
   if (total > 0) {
     cart.classList.add("show");
+    if (fabClear) fabClear.classList.add("show");
   } else {
     cart.classList.remove("show");
     cart.classList.remove("expanded");
     cartExpanded = false;
+    if (fabClear) fabClear.classList.remove("show");
     return;
   }
 
@@ -2370,7 +2427,15 @@ document.getElementById("cepDestino").addEventListener("keydown", (e) => {
 });
 document.getElementById("btnLimpar").addEventListener("click", () => {
   if (Object.keys(carrinho).length === 0) {
-    // Mesmo vazio, mostra confirmação pra dar feedback
+    alert("O carrinho já está vazio.");
+    return;
+  }
+  abrirConfirmacaoLimpar();
+});
+
+// Botão FAB de limpar (sempre acessível, mesmo com carrinho fechado)
+document.getElementById("btnLimparFAB").addEventListener("click", () => {
+  if (Object.keys(carrinho).length === 0) {
     alert("O carrinho já está vazio.");
     return;
   }
